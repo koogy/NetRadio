@@ -1,6 +1,9 @@
 import java.net.*;
 import java.io.*;
-public class Client1{
+
+/* Client envoyant un message a un diffuseur. Le port doit etre specifie en argument à l'execution */
+
+public class ClientSend{
     static String id;
     static String mess;
     public static void main(String[] argv){
@@ -19,6 +22,7 @@ public class Client1{
 	    Socket socket=new Socket("localhost", port);
 	    BufferedReader br=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+	    //156 octets à récupérer dans le diffuseur du coup (si je me trompe pas)
 	    pw.print("MESS" + " " + id + " " + mess + "\n");
 	    String recu=br.readLine();
             System.out.println("Message du diffuseur : " + recu);
