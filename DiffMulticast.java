@@ -52,10 +52,7 @@ public class DiffMulticast implements Runnable
 	                String s = "DIFF " + i + " " + idDiff + " " + messDiff.get(i);
 	                data = s.getBytes();
 	                InetSocketAddress ia = new InetSocketAddress("225.1.2.4", portMulticast); // Juste pour le moment : il faudra ensuite ne plus stocker l'adresse en dur ?
-	                DatagramPacket p
-
-
-	                aquet = new 
+	                DatagramPacket paquet = new 
 							DatagramPacket(data, data.length, ia);
 	                dso.send(paquet);
 	            } else
