@@ -24,6 +24,7 @@ public class ClientSend{
             PrintWriter pw=new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 	    //156 octets à récupérer dans le diffuseur du coup (si je me trompe pas)
 	    pw.print("MESS" + " " + id + " " + mess + "\n");
+	    pw.flush();
 	    String recu=br.readLine();
             System.out.println("Message du diffuseur : " + recu);
 	    pw.flush();    
