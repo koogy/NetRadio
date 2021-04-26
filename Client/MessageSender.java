@@ -6,16 +6,17 @@ import java.net.*;
 
 public class MessageSender implements Runnable {
 
-    int port;
-    public MessageSender(int port) {
-        this.port = port;
+    Client client;
+    public MessageSender(Client client) {
+        this.client = client;
     }
+
 
     @Override
     public void run() {
         while(true){
             try {
-                Socket socket = new Socket("localhost", this.port);
+                Socket socket = new Socket(client.diffuseur_address, client.tcp_port);
 
                BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));

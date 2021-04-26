@@ -12,15 +12,15 @@ public class Diffuseur {
     ArrayList<String> diffuseur_messages = new ArrayList<String>();
 
     public Diffuseur(){
-        this.diffuseur_id ="Diffboi";
-        this.multidiffusion_address = "225.10.20.30";
-        this.multidiffusion_port = 5151;
-        this.tcp_port = 5252;
+        this.diffuseur_id ="DIFFBOI";
+        this.multidiffusion_address = "225.1.2.4";
+        this.multidiffusion_port = 4040;
+        this.tcp_port = 3035;
     }
 
     public void populate_array(){
         for(int i =  0; i < 10;i++){
-            diffuseur_messages.add(Integer.toString(i));
+            diffuseur_messages.add("C'est le numéro: " + Integer.toString(i));
         }
     }
 
@@ -56,7 +56,6 @@ public class Diffuseur {
         Diffuseur diffuseur = new Diffuseur();
         diffuseur.display_diffuseur_information();
         diffuseur.populate_array();
-        diffuseur.print_array();
         diffuseur.start_diffuseur();
         
     }

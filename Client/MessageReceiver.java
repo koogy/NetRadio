@@ -3,16 +3,20 @@ import java.io.*;
 import java.net.*;
 
 public class MessageReceiver implements Runnable {
-    int port;
-    public MessageReceiver(int port) {
-        this.port = port;
+    
+    Client client;
+    public MessageReceiver(Client client) {
+        this.client = client;
     }
+
+    
 
     @Override
     public void run() {
         try {
-            MulticastSocket socket = new MulticastSocket(this.port);
-            socket.joinGroup(InetAddress.getByName("225.1.2.4"));
+            client.display_diffuseur_information();
+            MulticastSocket socket = new MulticastSocket(client.tcp_port);
+            socket.joinGroup(InetAddress.getByName(client.multidiffusion_address));
             byte[] data = new byte[100];
             DatagramPacket packet = new DatagramPacket(data, data.length);
             while (true) {
