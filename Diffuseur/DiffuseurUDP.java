@@ -1,14 +1,19 @@
 package Diffuseur;
 
 import java.util.LinkedList;
-import java.io.*;
 import java.net.*;
 
 
 public class DiffuseurUDP implements Runnable {
 
     static String idDiff; // Au plus 8 caractères
-    
+
+    Diffuseur diffuseur;
+
+    public DiffuseurUDP(Diffuseur diffuseur){
+        this.diffuseur = diffuseur;
+    }
+
     @Override
     public void run() {
         LinkedList < String > messDiff = new LinkedList < String > ();

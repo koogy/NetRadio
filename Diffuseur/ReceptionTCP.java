@@ -1,9 +1,16 @@
 package Diffuseur;
 
 import java.net.*;
+
 import java.io.*;
 
-public class DiffuseurTCP implements Runnable {
+public class ReceptionTCP implements Runnable {
+
+    Diffuseur diffuseur;
+
+    public ReceptionTCP(Diffuseur diffuseur){
+        this.diffuseur = diffuseur;
+    }
 
     @Override
     public void run() {
