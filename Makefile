@@ -7,7 +7,9 @@ clean:
 	rm Client/*.class
 
 diff:
+	javac Diffuseur/*.java
 	java Diffuseur.Diffuseur
 
 cli:
+	javac Client/*.java
 	java Client.Client

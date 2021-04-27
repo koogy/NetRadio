@@ -1,15 +1,15 @@
 package Client;
+
 import java.io.*;
 import java.net.*;
 
 public class MessageReceiver implements Runnable {
-    
+
     Client client;
+
     public MessageReceiver(Client client) {
         this.client = client;
     }
-
-    
 
     @Override
     public void run() {
@@ -22,7 +22,7 @@ public class MessageReceiver implements Runnable {
             while (true) {
                 socket.receive(packet);
                 String message = new String(packet.getData(), 0, packet.getLength());
-                System.out.println(message);
+                System.out.println("Le message : " + message);
             }
         } catch (Exception e) {
             e.printStackTrace();
