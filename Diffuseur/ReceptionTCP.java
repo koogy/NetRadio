@@ -33,16 +33,13 @@ public class ReceptionTCP implements Runnable {
                         Message.sendMessage(out, message);
                         
                     } else if (message.startsWith("LAST ")) {
-                        /*
-                         * nb-mess est un entier (compris entre 0 et 999) : +3 Ne fonctionne pas avec 8
-                         * pour le moment
-                         */
+                   
                         /* Todo check number is >0 and <= 999 */
-                        int nb_mess = Integer.parseInt(message.substring(5, 6));
+                        int nb_mess = Integer.parseInt(message.substring(5, 8));
                         
                         while (nb_mess != 0 && nb_mess < diffuseur.diffuseur_messages.size()) {
-                            Message.sendMessage(out, diffuseur.diffuseur_messages
-                                    .get(diffuseur.diffuseur_messages.size() - nb_mess));
+                            Message.sendMessage(out, "OLDM " + (diffuseur.diffuseur_messages
+                                    .get(diffuseur.diffuseur_messages.size() - nb_mess)));
                             
                             nb_mess -= 1;
                         }

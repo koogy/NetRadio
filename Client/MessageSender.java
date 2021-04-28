@@ -32,13 +32,26 @@ public class MessageSender implements Runnable {
                     user_input = input_reader.readLine();
                     if (user_input.length() > 5) {
                          message = user_input.substring(5, user_input.length());
+                         String test = "a";
                         if (user_input.startsWith("MESS ")) {
                             Message.sendMessage(out,"MESS " + client.client_id + " " + message);
                             validMessage = true;
                             last_message_type = MessageType.MESS;
 
                         } else if (user_input.startsWith("LAST ")) {
-                            Message.sendMessage(out,"LAST " + message );
+                            try{
+                                /* Quel comportement si nb > au nombre de message dans le diffuseur ? */
+                                int nb = Integer.parseInt(message);
+                                if(nb<0 || nb > 999){
+                                    throw new NumberFormatException();
+                                }
+                            } catch (NumberFormatException nb){
+                                System.out.println("Wrong format : LAST␣nb-mess where nb-mess >=0 and nb-mess <= 999");
+                                out.close();
+                                socket.close();
+                                continue;                            
+                            }
+                            Message.sendMessage(out,"LAST " + Message.formatNumber(message));
                             validMessage = true;
                             last_message_type = MessageType.LAST;
                         } else {
