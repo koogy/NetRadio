@@ -1,6 +1,7 @@
 all:
 	javac Diffuseur/*.java
 	javac Client/*.java
+	javac Messages/*.java
 
 clean:
 	rm Diffuseur/*.class
