@@ -32,7 +32,6 @@ public class MessageSender implements Runnable {
                     user_input = input_reader.readLine();
                     if (user_input.length() > 5) {
                          message = user_input.substring(5, user_input.length());
-                         String test = "a";
                         if (user_input.startsWith(MessageType.MESS.getValue())) {
                             Message.sendMessage(out,MessageType.MESS.getValue() + client.client_id + " " + message);
                             validMessage = true;

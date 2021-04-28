@@ -11,13 +11,22 @@ public class Client {
     String diffuseur_address;
     int tcp_port;
 
-    public Client() {
-        this.client_id = "CLIENTBOI";
-        this.multidiffusion_address = "225.1.2.4";
-        this.multidiffusion_port = 4040;
-        this.diffuseur_address = "127.0.0.1";
-        this.tcp_port = 3035;
+    public Client(String filename) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+            this.client_id =reader.readLine();
+            this.multidiffusion_address =reader.readLine();
+            this.multidiffusion_port =Integer.parseInt(reader.readLine());
+            this.diffuseur_address =reader.readLine();
+            this.tcp_port =Integer.parseInt(reader.readLine());
+        
+            reader.close();
+        } catch (Exception e) {
+        }
     }
+
+
 
     public void start_client() {
         MessageReceiver receiver = new MessageReceiver(this);
@@ -42,7 +51,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        Client client = new Client();
+        Client client = new Client(args[0]);
         client.start_client();
     }
 }

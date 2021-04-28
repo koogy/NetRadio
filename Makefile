@@ -9,8 +9,8 @@ clean:
 
 diff:
 	javac Diffuseur/*.java
-	java Diffuseur.Diffuseur
+	java Diffuseur.Diffuseur Configs/diff-config.txt 
 
 cli:
 	javac Client/*.java
-	java Client.Client
+	java Client.Client Configs/client-config.txt 

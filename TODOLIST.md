@@ -5,6 +5,7 @@
 - Vérifier que la forme des messages est bien respectée 
 
 <!--  -->
+A FAIRE 
 
 — num-mess sera codé sur 4 octets et contiendra la chaîne de caractères correspondant au numéro du
 message. Par exemple, pour le message 120, num-mess vaudra 0120.
