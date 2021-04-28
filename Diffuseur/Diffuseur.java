@@ -20,7 +20,7 @@ public class Diffuseur {
 
     public void populate_array() {
         for (int i = 0; i < 10; i++) {
-            diffuseur_messages.add("C'est le numéro: " + Integer.toString(i));
+            diffuseur_messages.add( i+ " " + diffuseur_id  +" C'est le numéro: " + Integer.toString(i));
         }
     }
 

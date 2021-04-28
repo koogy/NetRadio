@@ -28,23 +28,23 @@ public class ReceptionTCP implements Runnable {
                  * diffuser
                  */
                 if (message != null) {
-                    if (message.startsWith("MESS ")) {
+                    if (message.startsWith(MessageType.MESS.getValue())) {
                         diffuseur.diffuseur_messages.add(message.substring(5, message.length()));
                         Message.sendMessage(out, message);
                         
-                    } else if (message.startsWith("LAST ")) {
+                    } else if (message.startsWith(MessageType.LAST.getValue())) {
                    
                         /* Todo check number is >0 and <= 999 */
                         int nb_mess = Integer.parseInt(message.substring(5, 8));
                         
                         while (nb_mess != 0 && nb_mess < diffuseur.diffuseur_messages.size()) {
-                            Message.sendMessage(out, "OLDM " + (diffuseur.diffuseur_messages
+                            Message.sendMessage(out, MessageType.OLDM.getValue() + (diffuseur.diffuseur_messages
                                     .get(diffuseur.diffuseur_messages.size() - nb_mess)));
                             
                             nb_mess -= 1;
                         }
-                        out.print("EDM\n\r");
-                        out.flush();
+                        Message.sendMessage(out, MessageType.ENDM.getValue());
+                 
                     } else {
                         System.out.println("Message recu :" + message);
                         Message.sendMessage(out,message);

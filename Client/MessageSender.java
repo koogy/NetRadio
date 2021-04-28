@@ -33,12 +33,12 @@ public class MessageSender implements Runnable {
                     if (user_input.length() > 5) {
                          message = user_input.substring(5, user_input.length());
                          String test = "a";
-                        if (user_input.startsWith("MESS ")) {
-                            Message.sendMessage(out,"MESS " + client.client_id + " " + message);
+                        if (user_input.startsWith(MessageType.MESS.getValue())) {
+                            Message.sendMessage(out,MessageType.MESS.getValue() + client.client_id + " " + message);
                             validMessage = true;
                             last_message_type = MessageType.MESS;
 
-                        } else if (user_input.startsWith("LAST ")) {
+                        } else if (user_input.startsWith(MessageType.LAST.getValue())) {
                             try{
                                 /* Quel comportement si nb > au nombre de message dans le diffuseur ? */
                                 int nb = Integer.parseInt(message);
@@ -51,7 +51,7 @@ public class MessageSender implements Runnable {
                                 socket.close();
                                 continue;                            
                             }
-                            Message.sendMessage(out,"LAST " + Message.formatNumber(message));
+                            Message.sendMessage(out,MessageType.LAST.getValue() + Message.formatNumber(message));
                             validMessage = true;
                             last_message_type = MessageType.LAST;
                         } else {
@@ -64,8 +64,8 @@ public class MessageSender implements Runnable {
                 if (last_message_type == MessageType.LAST) {
                         System.out.println("In LAST");
                         String message_from_server = in.readLine();
-                        while (!message_from_server.equals("EDM")) {
-                            System.out.println("Message from server : " + message_from_server);
+                        while (!message_from_server.equals(MessageType.ENDM.getValue())) {
+                            System.out.println(message_from_server);
                             message_from_server = in.readLine();
                         }
     
@@ -74,7 +74,7 @@ public class MessageSender implements Runnable {
                 } else {
                     if(validMessage){
                         String message_from_server = in.readLine();
-                        System.out.println("Message from server : " + message_from_server);
+                        System.out.println(message_from_server);
                         last_message_type = MessageType.NONE;
                     }
                
