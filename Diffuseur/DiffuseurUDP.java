@@ -8,7 +8,6 @@ import Messages.*;
 
 public class DiffuseurUDP implements Runnable {
 
-
     Diffuseur diffuseur;
 
     public DiffuseurUDP(Diffuseur diffuseur) {
@@ -22,8 +21,12 @@ public class DiffuseurUDP implements Runnable {
             DatagramSocket dso = new DatagramSocket();
             byte[] data;
             while (true) {
-                int randomNum = rand.nextInt(diffuseur.diffuseur_messages.getSize());
-                String diffuseur_message = MessageType.DIFF.getValue() + Message.formatNumber(diffuseur.diffuseur_messages.getNum_mess()) +" " + diffuseur.diffuseur_id + " " + diffuseur.diffuseur_messages.getMessage();
+                String diffuseur_message = "";
+                diffuseur_message = MessageType.DIFF.getValue();
+                diffuseur_message += Message.formatNumber(diffuseur.diffuseur_messages.getNum_mess(), "0000") + " ";
+                diffuseur_message += Message.formatID(diffuseur.diffuseur_id) + " ";
+                diffuseur_message += diffuseur.diffuseur_messages.getMessage();
+
                 data = diffuseur_message.getBytes();
                 InetSocketAddress ia = new InetSocketAddress(diffuseur.multidiffusion_address, diffuseur.tcp_port);
                 DatagramPacket paquet = new DatagramPacket(data, data.length, ia);

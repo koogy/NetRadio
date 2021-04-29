@@ -1,12 +1,9 @@
-package Testing;
 
-import Messages.MessageType;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Scanner;
 
-import Messages.Message;
 
 public class Testing {
 
@@ -21,8 +18,12 @@ public class Testing {
       /*   printFile("./Configs/client-config.txt");
         printFile("./Configs/diff-config.txt"); */
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println(sc.nextLine());
+/*         Scanner sc = new Scanner(System.in);
+        System.out.println(sc.nextLine()); */
+
+        String nb_mess = "RADIO";
+        nb_mess = (nb_mess +"########" ).substring(0,8); 
+        System.out.println(nb_mess);
         }
 
     public static void printFile(String filename) {

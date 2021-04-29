@@ -38,7 +38,7 @@ public class ReceptionTCP implements Runnable {
                                     int nb_mess = Integer.parseInt(message.substring(5, 8));
                                     
                                     while (nb_mess != 0 && nb_mess < diffuseur.diffuseur_messages.getSize()) {
-                                        Message.sendMessage(out, MessageType.OLDM.getValue() + Message.formatNumber(diffuseur.diffuseur_messages.getSize() -nb_mess) + " " +(diffuseur.diffuseur_messages
+                                        Message.sendMessage(out, MessageType.OLDM.getValue() + Message.formatNumber(diffuseur.diffuseur_messages.getSize() -nb_mess,"0000") + " " +(diffuseur.diffuseur_messages
                                                 .getMessage(diffuseur.diffuseur_messages.getSize() - nb_mess)));
                                         
                                         nb_mess -= 1;

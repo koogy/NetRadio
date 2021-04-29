@@ -45,14 +45,17 @@ public class Diffuseur {
     }
 
     public void start_diffuseur() {
-        ReceptionTCP diff_tcp = new ReceptionTCP(this);
+        ReceptionTCP reception_tcp = new ReceptionTCP(this);
         DiffuseurUDP diff_udp = new DiffuseurUDP(this);
+        DiffuseurTCP diff_tcp = new DiffuseurTCP(this);
 
-        Thread t_tcp = new Thread(diff_tcp);
+        Thread t_tcp = new Thread(reception_tcp);
         Thread t_udp = new Thread(diff_udp);
+        Thread r_tcp = new Thread(diff_tcp);
 
         t_tcp.start();
         t_udp.start();
+        r_tcp.start();
     }
 
     public static void main(String[] args) {

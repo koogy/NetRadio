@@ -14,13 +14,21 @@ public class Client {
     public Client(String filename) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
-
             this.client_id = reader.readLine();
+            if(client_id.length()> 8){
+                this.client_id = client_id.substring(0, 8);
+            }
             this.multidiffusion_address = reader.readLine();
             this.multidiffusion_port = Integer.parseInt(reader.readLine());
+            if(multidiffusion_port > 9999){
+                System.out.println("MULTIDIFFUSION PORT has to be < 9999");
+
+            }
             this.diffuseur_address = reader.readLine();
             this.tcp_port = Integer.parseInt(reader.readLine());
-
+            if(tcp_port > 9999){
+                System.out.println("TCP_PORT has to be < 9999");
+            }
             reader.close();
         } catch (Exception e) {
             System.err.format("Exception occurred trying to read '%s'.", filename);

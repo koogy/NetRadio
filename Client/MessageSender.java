@@ -50,7 +50,7 @@ public class MessageSender implements Runnable {
                                 socket.close();
                                 continue;                            
                             }
-                            Message.sendMessage(out,MessageType.LAST.getValue() + Message.formatNumber(message));
+                            Message.sendMessage(out,MessageType.LAST.getValue() + Message.formatNumber(message,"000"));
                             validMessage = true;
                             last_message_type = MessageType.LAST;
                         } else {
