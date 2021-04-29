@@ -70,7 +70,15 @@ public class MessageSender implements Runnable {
     
                         System.out.println("Set flag to true");
                         last_message_type = MessageType.NONE;
-                } else {
+                } else if(last_message_type == MessageType.MESS){
+                    String message_from_server = in.readLine();
+                    if(message_from_server.equals(MessageType.ACKM.getValue())){
+                        System.out.println(message_from_server);
+                        last_message_type = MessageType.NONE;
+                    }
+                }
+                else
+                {
                     if(validMessage){
                         String message_from_server = in.readLine();
                         System.out.println(message_from_server);

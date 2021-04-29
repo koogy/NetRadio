@@ -15,18 +15,19 @@ public class Client {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
 
-            this.client_id =reader.readLine();
-            this.multidiffusion_address =reader.readLine();
-            this.multidiffusion_port =Integer.parseInt(reader.readLine());
-            this.diffuseur_address =reader.readLine();
-            this.tcp_port =Integer.parseInt(reader.readLine());
-        
+            this.client_id = reader.readLine();
+            this.multidiffusion_address = reader.readLine();
+            this.multidiffusion_port = Integer.parseInt(reader.readLine());
+            this.diffuseur_address = reader.readLine();
+            this.tcp_port = Integer.parseInt(reader.readLine());
+
             reader.close();
         } catch (Exception e) {
+            System.err.format("Exception occurred trying to read '%s'.", filename);
+            e.printStackTrace();
+
         }
     }
-
-
 
     public void start_client() {
         MessageReceiver receiver = new MessageReceiver(this);

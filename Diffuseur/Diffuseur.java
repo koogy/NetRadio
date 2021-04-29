@@ -1,6 +1,7 @@
 package Diffuseur;
 import java.io.*;
 import java.util.ArrayList;
+import Messages.*;
 
 public class Diffuseur {
 
@@ -9,9 +10,10 @@ public class Diffuseur {
     int multidiffusion_port;
     int tcp_port;
 
-    ArrayList<String> diffuseur_messages = new ArrayList<String>();
+    MessageDiffuseur diffuseur_messages;
 
     public Diffuseur(String filename) {
+        diffuseur_messages = new MessageDiffuseur();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
 
@@ -28,17 +30,9 @@ public class Diffuseur {
         }
     }
 
-    public void populate_array() {
-        for (int i = 0; i < 10; i++) {
-            diffuseur_messages.add( i+ " " + diffuseur_id  +" C'est le numéro: " + Integer.toString(i));
-        }
-    }
+ 
 
-    public void print_array() {
-        for (String message : diffuseur_messages) {
-            System.out.println("Message numéro : " + message);
-        }
-    }
+
 
     public void display_diffuseur_information() {
         System.out.println("---------------------------------------");
@@ -64,7 +58,7 @@ public class Diffuseur {
     public static void main(String[] args) {
         Diffuseur diffuseur = new Diffuseur(args[0]);
         diffuseur.display_diffuseur_information();
-        diffuseur.populate_array();
+
         diffuseur.start_diffuseur();
     }
 

@@ -4,6 +4,7 @@ import Messages.MessageType;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Scanner;
 
 import Messages.Message;
 
@@ -16,9 +17,13 @@ public class Testing {
          * 
          * System.out.println(MessageType.ACKM.getValue());
          */
-        printFile("./Configs/client-config.txt");
-        printFile("./Configs/diff-config.txt");
-    }
+
+      /*   printFile("./Configs/client-config.txt");
+        printFile("./Configs/diff-config.txt"); */
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println(sc.nextLine());
+        }
 
     public static void printFile(String filename) {
         try {

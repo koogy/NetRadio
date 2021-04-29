@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.net.*;
 import java.util.Random;
 
+import Messages.*;
+
 public class DiffuseurUDP implements Runnable {
 
 
@@ -20,8 +22,8 @@ public class DiffuseurUDP implements Runnable {
             DatagramSocket dso = new DatagramSocket();
             byte[] data;
             while (true) {
-                int randomNum = rand.nextInt(diffuseur.diffuseur_messages.size());
-                String diffuseur_message =  diffuseur.diffuseur_messages.get(randomNum);
+                int randomNum = rand.nextInt(diffuseur.diffuseur_messages.getSize());
+                String diffuseur_message = MessageType.DIFF.getValue() + Message.formatNumber(diffuseur.diffuseur_messages.getNum_mess()) +" " + diffuseur.diffuseur_id + " " + diffuseur.diffuseur_messages.getMessage();
                 data = diffuseur_message.getBytes();
                 InetSocketAddress ia = new InetSocketAddress(diffuseur.multidiffusion_address, diffuseur.tcp_port);
                 DatagramPacket paquet = new DatagramPacket(data, data.length, ia);

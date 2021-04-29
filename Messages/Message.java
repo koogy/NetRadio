@@ -12,6 +12,10 @@ public class Message {
         out.flush();
     }
 
+    public static String formatNumber(int nb_mess) {
+        return formatNumber(Integer.toString(nb_mess));
+    }
+
     public static String formatNumber(String nb_mess) {
         return ("000" + nb_mess).substring(nb_mess.length());
     }
