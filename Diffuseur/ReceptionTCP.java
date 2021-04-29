@@ -45,7 +45,10 @@ public class ReceptionTCP implements Runnable {
                                     }
                                     Message.sendMessage(out, MessageType.ENDM.getValue());
                              
-                                } else {
+                                } else if (message.equals(MessageType.RUOK.getValue())) {
+                                    Message.sendMessage(out, MessageType.IMOK.getValue());
+                                }
+                                else {
                                     System.out.println("Message recu :" + message);
                                     Message.sendMessage(out,message);
                                 }

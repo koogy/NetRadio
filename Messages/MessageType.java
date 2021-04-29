@@ -5,7 +5,7 @@ public enum MessageType {
    DIFF("DIFF "), MESS("MESS "), ACKM("ACKM "), 
    LAST("LAST "), OLDM("OLDM "), ENDM("ENDM"), 
    REGI("REGI"), REOK("REOK "), RENO("RENO "), 
-   RUOK("RUOK "), IMOK("IMOK "), LIST("LIST "),
+   RUOK("RUOK"), IMOK("IMOK "), LIST("LIST "),
    LINB("LINB "), ITEM("ITEM "), NONE("");
    
    String value;

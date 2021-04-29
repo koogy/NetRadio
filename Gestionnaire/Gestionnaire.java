@@ -65,7 +65,7 @@ public class Gestionnaire {
 
     public static void main(String [] args){
         Gestionnaire g = new Gestionnaire(6060);
-        DiffuseurChecker dc = new DiffuseurChecker(g);
+        DiffuseurChecker dc = new DiffuseurChecker(g.diffuseur_list);
         Thread t_dc = new Thread(dc);
         t_dc.start();
         g.start_gestionnaire();
