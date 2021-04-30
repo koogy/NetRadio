@@ -15,14 +15,6 @@ public class DiffuseurChecker implements Runnable {
 
     }
 
-    public void answerGestionnaire() {
-        new Thread() {
-            public void run() {
-
-            }
-        }.start();
-    }
-
     public void run() {
 
         while (true) {
@@ -35,9 +27,10 @@ public class DiffuseurChecker implements Runnable {
                 for (DiffuseurInformation d : diffuseurList.getList()) {
                     String[] diffuseur_informations = d.getInformation().split("\\s+");
                     socket = new Socket(diffuseur_informations[2], Integer.parseInt(diffuseur_informations[3]));
+                    socket.setSoTimeout(100000000);
+
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-                    socket.setSoTimeout(100000000);
 
                     Message.sendMessage(out, MessageType.RUOK.getValue());
                     message_server = in.readLine();
