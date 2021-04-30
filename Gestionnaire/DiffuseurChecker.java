@@ -10,21 +10,22 @@ public class DiffuseurChecker implements Runnable {
 
     public DiffuseurChecker(DiffuseurList diffuseurList) {
         this.diffuseurList = diffuseurList;
+        /* diffuseurList.getList().add("DIFFBOI 225.1.2.4 DESKTOP-6MR9G5O/127.0.1.1 303"); */
     }
 
     public void run() {
         try {
             while (true) {
                 int i = 0;
-                for (String d : diffuseurList.getList()) {
-                    String[] diffuseur_info = d.split("\\s+");
-                    try {
 
-                        Socket socket = new Socket(diffuseur_info[1], Integer.parseInt(diffuseur_info[3]));
+                /*  Mauvaise façon, à refaire, il faudrai plutot crée une liste contenant les sockets des diffuseurs ça a plus de sens */
+                for (DiffuseurInformation d : diffuseurList.getList()) {
+                    try {
+                        Socket socket = d.getSocket();
                         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                         Message.sendMessage(out, MessageType.RUOK.getValue());
-
+                        
                         /* Add timeout function here ... */
                         String message_server = in.readLine();
                         if (!message_server.equals(MessageType.IMOK.getValue())) {
@@ -33,8 +34,7 @@ public class DiffuseurChecker implements Runnable {
                         }
                         i++;
 
-                    } catch (Exception e) {
-
+                    } catch (SocketException  e) {
                     }
                 }
             }

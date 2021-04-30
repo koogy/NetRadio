@@ -6,11 +6,11 @@ import Messages.*;
 import java.util.ArrayList;
 
 public class DiffuseurList {
-    ArrayList<String> diffuseurs;
+    ArrayList<DiffuseurInformation> diffuseurs;
     int max_size = 5;
 
     public DiffuseurList(){
-        diffuseurs = new ArrayList<String>();
+        diffuseurs = new ArrayList<DiffuseurInformation>();
     }
 
     public boolean canAdd(){
@@ -25,21 +25,21 @@ public class DiffuseurList {
         return diffuseurs.size();
     }
 
-    public String getDiffuseur(int index){
-        return diffuseurs.get(index);
+    public String getInformation(int index){
+        return diffuseurs.get(index).getInformation();
     }
 
-    public void addDiffuseur(String diffuseur){
+    public void addDiffuseur(DiffuseurInformation diffuseur){
         diffuseurs.add(diffuseur);
     }
 
     public void print_array() {
-        for (String d : diffuseurs) {
-            System.out.println(d);
+        for(int i = 0; i < getSize() ; i++){
+            System.out.println(diffuseurs.get(i).getInformation());
         }
     }
 
-    public ArrayList<String> getList(){
+    public ArrayList<DiffuseurInformation> getList(){
         return this.diffuseurs;
     }
 

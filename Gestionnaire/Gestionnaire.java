@@ -30,7 +30,7 @@ public class Gestionnaire {
                             if (message != null) {
                                 if (message.equals(MessageType.REGI.getValue())) {
                                     if(diffuseur_list.canAdd()){
-                                        diffuseur_list.addDiffuseur(message.substring(5, message.length()));
+                                        diffuseur_list.addDiffuseur(new DiffuseurInformation(message.substring(5, message.length()), socket));
                                         Message.sendMessage(out, MessageType.REOK.getValue());
                                     } else {
                                         Message.sendMessage(out, MessageType.RENO.getValue());
@@ -46,10 +46,10 @@ public class Gestionnaire {
                                 }
             
                             }
-            
+            /* 
                             in.close();
                             out.close();
-                            socket.close();
+                            socket.close(); */
                         } catch (Exception e){
 
                         }
