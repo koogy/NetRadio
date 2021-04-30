@@ -5,7 +5,7 @@ public class Message {
 
 
     public static String formatMessage(String message) {
-        return message + "\n";
+        return message + "\r\n";
     }
 
     public static void sendMessage(PrintWriter out, String message) {
