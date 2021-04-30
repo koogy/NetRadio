@@ -18,7 +18,7 @@ public class DiffuseurTCP implements Runnable {
         BufferedReader input_reader = new BufferedReader(new InputStreamReader(System.in));
         try {
             while (true) {
-                Socket socket=new Socket("localhost",6060);
+                Socket socket=new Socket("localhost",diffuseur.gestionnaire_port);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                 String user_input ="";

@@ -26,21 +26,32 @@ public class Gestionnaire {
                             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                             PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                             String message = in.readLine();
-     
                             if (message != null) {
-                                if (message.equals(MessageType.REGI.getValue())) {
+                                if (message.startsWith(MessageType.REGI.getValue())) {
                                     if(diffuseur_list.canAdd()){
                                         diffuseur_list.addDiffuseur(new DiffuseurInformation(message.substring(5, message.length()), socket));
                                         Message.sendMessage(out, MessageType.REOK.getValue());
                                     } else {
-                                        Message.sendMessage(out, MessageType.RENO.getValue());
                                         in.close();
                                         out.close();
                                         socket.close();
                                     }
                                    
                                     
-                                }  else {
+                                } else if (message.equals(MessageType.LIST.getValue())) {
+                                    Message.sendMessage(out, MessageType.LINB.getValue()  + diffuseur_list.getSize());
+
+                                    for( int i = 0 ; i < diffuseur_list.getSize();i++){
+                                        String diffuseur_information = diffuseur_list.getList().get(i).getInformation();
+                                        System.out.println(diffuseur_list.getList().get(i).getInformation());
+                                        Message.sendMessage(out, MessageType.ITEM.getValue() + diffuseur_information);
+                                       
+                                    }
+                                    in.close();
+                                    out.close();
+                                    socket.close();
+                                    
+                                } else {
                                     System.out.println("Message recu :" + message);
                                     Message.sendMessage(out,message);
                                 }

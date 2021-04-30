@@ -10,6 +10,7 @@ public class Client {
     int multidiffusion_port;
     String diffuseur_address;
     int tcp_port;
+    int gestionnaire_port;
 
     public Client(String filename) {
         try {
@@ -29,6 +30,9 @@ public class Client {
             if(tcp_port > 9999){
                 System.out.println("TCP_PORT has to be < 9999");
             }
+
+            this.gestionnaire_port = Integer.parseInt(reader.readLine());
+            
             reader.close();
         } catch (Exception e) {
             System.err.format("Exception occurred trying to read '%s'.", filename);
@@ -55,6 +59,7 @@ public class Client {
         System.out.println("[MULTIDIFUSION ADDRESS] : " + this.multidiffusion_address);
         System.out.println("[MULTIDIFUSION PORT] : " + this.multidiffusion_port);
         System.out.println("[TCP PORT] : " + this.tcp_port);
+        System.out.println("[GES PORT] : " + this.gestionnaire_port);
         System.out.println("---------------------------------------");
         System.out.println();
     }

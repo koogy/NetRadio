@@ -9,6 +9,7 @@ public class Diffuseur {
     String multidiffusion_address;
     int multidiffusion_port;
     int tcp_port;
+    int gestionnaire_port;
 
     MessageDiffuseur diffuseur_messages;
 
@@ -21,6 +22,7 @@ public class Diffuseur {
             this.multidiffusion_address =reader.readLine();
             this.multidiffusion_port =Integer.parseInt(reader.readLine());
             this.tcp_port =Integer.parseInt(reader.readLine());
+            this.gestionnaire_port =Integer.parseInt(reader.readLine());
         
             reader.close();
         } catch (Exception e) {
@@ -40,6 +42,7 @@ public class Diffuseur {
         System.out.println("[MULTIDIFUSION ADDRESS] : " + this.multidiffusion_address);
         System.out.println("[MULTIDIFUSION PORT] : " + this.multidiffusion_port);
         System.out.println("[TCP PORT] : " + this.tcp_port);
+        System.out.println("[GES PORT] : " + this.gestionnaire_port);
         System.out.println("---------------------------------------");
         System.out.println();
     }

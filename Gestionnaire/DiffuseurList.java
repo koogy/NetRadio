@@ -15,6 +15,7 @@ public class DiffuseurList {
 
     public boolean canAdd(){
         if(diffuseurs.size()== max_size){
+            System.out.println("It's false");
             return false;
         }
 
@@ -30,7 +31,17 @@ public class DiffuseurList {
     }
 
     public void addDiffuseur(DiffuseurInformation diffuseur){
-        diffuseurs.add(diffuseur);
+        if(diffuseurs.size() == 0){
+            diffuseurs.add(diffuseur);
+            return;
+        }
+
+        for(int i = 0 ; i < diffuseurs.size();i++){
+            if(!((diffuseurs.get(i).getInformation()).substring(0,13).equals(diffuseur.getInformation().substring(0,13)))){
+                diffuseurs.add(diffuseur);
+            }
+        }
+       
     }
 
     public void print_array() {
