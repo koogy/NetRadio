@@ -10,38 +10,42 @@ public class DiffuseurChecker implements Runnable {
 
     public DiffuseurChecker(DiffuseurList diffuseurList) {
         this.diffuseurList = diffuseurList;
-        /* diffuseurList.getList().add("DIFFBOI 225.1.2.4 DESKTOP-6MR9G5O/127.0.1.1 303"); */
+
     }
 
     public void run() {
         try {
             while (true) {
                 int i = 0;
-
-                /*  Mauvaise façon, à refaire, il faudrai plutot crée une liste contenant les sockets des diffuseurs ça a plus de sens */
                 for (DiffuseurInformation d : diffuseurList.getList()) {
-                    try {
-                        Socket socket = d.getSocket();
-                        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-                        Message.sendMessage(out, MessageType.RUOK.getValue());
-                        
-                        /* Add timeout function here ... */
-                        String message_server = in.readLine();
-                        if (!message_server.equals(MessageType.IMOK.getValue())) {
-                            diffuseurList.getList().remove(i);
-                            socket.close();
-                        }
-                        i++;
+                    String[] diffuseur_informations = d.getInformation().split("\\s+");
+                    System.out.println(diffuseur_informations[2] + diffuseur_informations[3]);
 
-                    } catch (SocketException  e) {
+                   /*  Socket socket = new Socket(diffuseur_informations[2], Integer.parseInt(diffuseur_informations[3])); */
+                    Socket socket = d.getSocket();
+                    System.out.println(socket);
+                    BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+                    Message.sendMessage(out, MessageType.RUOK.getValue()); 
+                    String message_server = in.readLine();
+                    System.out.println("M : " + message_server);
+                    if (!message_server.equals(MessageType.IMOK.getValue())) {
+                        System.out.println("Deleting from list");
+                        diffuseurList.getList().remove(i);
+                        socket.close();
                     }
+
+                    i++;
                 }
+                Thread.sleep(2000);
             }
+
+            
         } catch (Exception e) {
-            System.out.println(e);
-            e.printStackTrace();
+         /*    System.out.println(e);
+            e.printStackTrace(); */
         }
     }
 
 }
+

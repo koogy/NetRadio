@@ -26,7 +26,6 @@ public class ReceptionTCP implements Runnable {
                             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                             PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                             String message = in.readLine();
-     
                             if (message != null) {
                                 if (message.startsWith(MessageType.MESS.getValue())) {
                                     diffuseur.diffuseur_messages.addMessage(message.substring(5, message.length()));

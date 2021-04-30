@@ -28,7 +28,9 @@ public class Gestionnaire {
                             String message = in.readLine();
                             if (message != null) {
                                 if (message.startsWith(MessageType.REGI.getValue())) {
+                                    System.out.println(message);
                                     if(diffuseur_list.canAdd()){
+                                        
                                         diffuseur_list.addDiffuseur(new DiffuseurInformation(message.substring(5, message.length()), socket));
                                         Message.sendMessage(out, MessageType.REOK.getValue());
                                     } else {
@@ -47,10 +49,10 @@ public class Gestionnaire {
                                         Message.sendMessage(out, MessageType.ITEM.getValue() + diffuseur_information);
                                        
                                     }
-                                    in.close();
+                                   /*  in.close();
                                     out.close();
                                     socket.close();
-                                    
+                                     */
                                 } else {
                                     System.out.println("Message recu :" + message);
                                     Message.sendMessage(out,message);

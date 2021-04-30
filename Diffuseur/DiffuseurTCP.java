@@ -17,8 +17,10 @@ public class DiffuseurTCP implements Runnable {
     public void run() {
         BufferedReader input_reader = new BufferedReader(new InputStreamReader(System.in));
         try {
+            Socket socket=new Socket("localhost",diffuseur.gestionnaire_port);
             while (true) {
-                Socket socket=new Socket("localhost",diffuseur.gestionnaire_port);
+                /* Crée un thread à test */
+                System.out.println(socket);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                 String user_input ="";
@@ -36,7 +38,7 @@ public class DiffuseurTCP implements Runnable {
                     }
              
                 out.close();
-                socket.close();
+              
 
             }
         } catch (Exception e) {
