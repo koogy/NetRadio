@@ -64,7 +64,6 @@ public class Diffuseur {
     public static void main(String[] args) {
         Diffuseur diffuseur = new Diffuseur(args[0]);
         diffuseur.display_diffuseur_information();
-
         diffuseur.start_diffuseur();
     }
 

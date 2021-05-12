@@ -2,7 +2,16 @@ package Gestionnaire;
 import java.io.*;
 import java.net.*;
 import Messages.*;
-
+    /* Create empty list */
+/*     struct DiffuseurList* head = NULL;
+    push_to_list(&head,"REGI BOI 213.2130213.32");
+    push_to_list(&head,"REGI GURL 213.2130213.32");
+    push_to_list(&head,"REGI efa 213.2130213.32");
+    push_to_list(&head,"REGI feaq 213.2130213.32");
+ /*    delete(&head,3); */
+/*     print_list(head); */
+/*     printf("%d \n",getSize(head));
+    printf("%d \n",canAdd(head)); */ 
 public class Gestionnaire {
 
     int port;

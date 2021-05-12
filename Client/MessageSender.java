@@ -67,7 +67,7 @@ public class MessageSender implements Runnable {
                             int num_diff = Integer.parseInt(message_from_server.substring(5,message_from_server.length() ));
                             for( int i = 0 ; i < num_diff ; i++){
                                 System.out.println(in_l.readLine());
-                            }
+                            } 
                             
 
                         } else {
