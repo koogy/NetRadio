@@ -34,27 +34,6 @@ char * getIdentifiant(char * message)
     return id;
 }
 
-void push_to_list(struct DiffuseurList* head, char * diffuseur_information){
-    
-      struct DiffuseurList*  current = head;
-    while (current->next != NULL) {
-        current = current->next;
-    }
-
-    /* now we can add a new variable */
-    current->next = (struct DiffuseurList*) malloc(sizeof(struct DiffuseurList*));
-    current->next->diffuseur_information = diffuseur_information;
-    current->next->next = NULL;
-}
-
-void print_list(struct DiffuseurList* node){
-    struct DiffuseurList* current = node;
-
-    while (current != NULL) {
-        printf("%s\n", current->diffuseur_information);
-        current = current->next;
-    }
-}
 
 int getSize(struct DiffuseurList* head){
       struct DiffuseurList* current = head;
@@ -68,6 +47,41 @@ int getSize(struct DiffuseurList* head){
     }
     return counter;
 }
+
+int canAdd(struct DiffuseurList* head){
+    if(getSize(head)==MAX_SIZE ){
+         return 0;
+    }
+
+    return 1;
+}
+
+
+void push_to_list(struct DiffuseurList* head, char * diffuseur_information){
+    
+    
+      struct DiffuseurList*  current = head;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+
+    /* now we can add a new variable */
+    current->next = (struct DiffuseurList*) malloc(sizeof(struct DiffuseurList*));
+    current->next->diffuseur_information = diffuseur_information;
+    current->next->next = NULL;
+    
+  
+}
+
+void print_list(struct DiffuseurList* node){
+    struct DiffuseurList* current = node;
+
+    while (current != NULL) {
+        printf("%s\n", current->diffuseur_information);
+        current = current->next;
+    }
+}
+
 
 void delete(struct DiffuseurList** head, int index){
     int counter = 0;
@@ -91,14 +105,6 @@ void delete(struct DiffuseurList** head, int index){
 
     prev->next = current->next;
     free(current);
-}
-
-int canAdd(struct DiffuseurList* head){
-    if(getSize(head)==MAX_SIZE ){
-         return 0;
-    }
-
-    return 1;
 }
 
 int isInList(struct DiffuseurList * node, char * message){

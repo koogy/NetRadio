@@ -63,7 +63,7 @@ struct DiffuseurList* head = arg;
          if(startsWith("REGI",message)){
             printf("It's a REGI \n");
 
-            if(canAdd(head)){
+            if(canAdd(head->next) && isInList(head->next,message) != 1){
                 char *message_cpy = malloc(160);
                 strcpy(message_cpy,message);
                 printf("Adding to list...%s : %p \n", message_cpy, message_cpy);
