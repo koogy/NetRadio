@@ -64,8 +64,8 @@ struct DiffuseurList* head = arg;
             if(canAdd(head->next) && isInList(head->next,message) != 1){
                 char *message_cpy = malloc(160);
                 strcpy(message_cpy,message);
-                printf("Adding to list...%s : %p \n", message_cpy, message_cpy);
                 push_to_list(head,message_cpy);
+                printf("[ADDING] - %s \n", message+5);
                 
                 char * message ="REOK\r\n";
                 send(new_fd,message,strlen(message),0);

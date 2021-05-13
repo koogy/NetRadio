@@ -20,8 +20,9 @@ public class MessageSender implements Runnable {
         boolean validMessage = false;
         MessageType last_message_type = MessageType.NONE;
 
-        try {
+       
             while (true) {
+                try {
                 Socket socket = new Socket(client.diffuseur_address, client.tcp_port);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -67,15 +68,11 @@ public class MessageSender implements Runnable {
                             for( int i = 0 ; i < num_diff ; i++){
                                 System.out.println(in_l.readLine());
                             } 
-                            
-
                         } else {
                             System.out.println("Unknown command");
                             validMessage = false;
                         }
-                    
                 }
-
                 if (last_message_type == MessageType.LAST) {
                     String message_from_server = in.readLine();
                     while (!message_from_server.equals(MessageType.ENDM.getValue())) {
@@ -102,8 +99,10 @@ public class MessageSender implements Runnable {
                 out.close();
                 socket.close();
             }
-        } catch (Exception exception) {
-        }
+            catch (Exception exception) {
+                System.out.println("Not connected to diffuseur yet...");
+            }
+        } 
 
     }
 }
