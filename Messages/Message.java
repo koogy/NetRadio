@@ -25,6 +25,20 @@ public class Message {
         return id = (id +"########").substring(0,8);
     }
 
+    public static String formatIPaddress(String ip){
+        String[] address = ip.split("\\.");
+        String template = "000";
+        String output = "";
+
+        for(int i = 0; i < 4; i++){
+            String current = (template + address[i]);
+            int current_length = current.length();
+            output += current.substring(current_length-3,current_length) + ".";
+        }
+        
+        return output.substring(0,15);
+    }
+    
     public static String completeMessage(String message){
         if(message.length() > 140){
             return message.substring(0,140);
@@ -33,9 +47,10 @@ public class Message {
         for(int i = 0 ; i < 140;i++){
             temp +="#";
         }
-
         return (message + temp).substring(0,140);
-
     }
+
+
+    
 
 }
