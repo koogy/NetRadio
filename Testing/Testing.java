@@ -21,10 +21,21 @@ public class Testing {
 /*         Scanner sc = new Scanner(System.in);
         System.out.println(sc.nextLine()); */
 
-        String nb_mess = "RADIO";
+        /* String nb_mess = "RADIO";
         nb_mess = (nb_mess +"########" ).substring(0,8); 
-        System.out.println(nb_mess);
+        System.out.println(nb_mess); */
+
+        
         }
+
+        public static String formatNumber(int nb_mess,String zero) {
+            return formatNumber(Integer.toString(nb_mess),zero);
+        }
+    
+        public static String formatNumber(String nb_mess,String zero) {
+            return (zero + nb_mess).substring(nb_mess.length());
+        }
+    
 
     public static void printFile(String filename) {
         try {

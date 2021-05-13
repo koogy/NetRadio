@@ -27,11 +27,13 @@ public class DiffuseurUDP implements Runnable {
                 diffuseur_message += Message.formatID(diffuseur.diffuseur_id) + " ";
                 diffuseur_message += diffuseur.diffuseur_messages.getMessage();
 
+                diffuseur.messages_sent.add(diffuseur_message.substring(5));
+
                 data = diffuseur_message.getBytes();
                 InetSocketAddress ia = new InetSocketAddress(diffuseur.multidiffusion_address, diffuseur.tcp_port);
                 DatagramPacket paquet = new DatagramPacket(data, data.length, ia);
                 dso.send(paquet);
-                Thread.sleep(2000);
+                Thread.sleep(3000);
             }
 
         } catch (Exception e) {

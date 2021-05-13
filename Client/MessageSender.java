@@ -51,8 +51,7 @@ public class MessageSender implements Runnable {
                                 socket.close();
                                 continue;
                             }
-                            Message.sendMessage(out,
-                                    MessageType.LAST.getValue() + Message.formatNumber(message, "000"));
+                            Message.sendMessage(out,MessageType.LAST.getValue() + Message.formatNumber(message, "000"));
                             validMessage = true;
                             last_message_type = MessageType.LAST;
                         } else if (user_input.equals(MessageType.LIST.getValue())) {
@@ -75,10 +74,12 @@ public class MessageSender implements Runnable {
                 }
                 if (last_message_type == MessageType.LAST) {
                     String message_from_server = in.readLine();
+                    System.out.println("\n================");
                     while (!message_from_server.equals(MessageType.ENDM.getValue())) {
                         System.out.println(message_from_server);
                         message_from_server = in.readLine();
                     }
+                    System.out.println("================\n");
 
                     last_message_type = MessageType.NONE;
                 } else if (last_message_type == MessageType.MESS) {

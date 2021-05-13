@@ -1,5 +1,6 @@
 package Messages;
 
+import java.io.*;
 import java.util.ArrayList;
 
 public class MessageDiffuseur {
@@ -8,8 +9,17 @@ public class MessageDiffuseur {
     
     public MessageDiffuseur(){
         diffuseur_messages = new ArrayList<String>();
-        for (int i = 0; i < 10; i++) {
-            diffuseur_messages.add("C'est le numéro: " + Integer.toString(i));
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("./Messages/diffuseur.txt"));
+            String line = reader.readLine();
+            while(line != null){
+                diffuseur_messages.add(line);
+                line = reader.readLine();
+            }
+            
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -18,6 +28,9 @@ public class MessageDiffuseur {
     }
 
     public int getNum_mess(){
+        if(num_mess == 10000){
+            num_mess = 0;
+        }
         return num_mess;
     }
 
@@ -40,5 +53,4 @@ public class MessageDiffuseur {
         }
     }
 
-    
 }

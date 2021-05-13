@@ -2,7 +2,7 @@ package Client;
 
 import java.io.*;
 import java.net.*;
-
+import Messages.Message;
 public class Client {
 
     String client_id;
@@ -19,7 +19,7 @@ public class Client {
             if(client_id.length()> 8){
                 this.client_id = client_id.substring(0, 8);
             }
-            this.multidiffusion_address = reader.readLine();
+            this.multidiffusion_address = Message.formatIPaddress(reader.readLine());
             this.multidiffusion_port = Integer.parseInt(reader.readLine());
             if(multidiffusion_port > 9999){
                 System.out.println("MULTIDIFFUSION PORT has to be < 9999");
