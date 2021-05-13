@@ -83,11 +83,13 @@ void print_list(struct DiffuseurList* node){
 }
 
 
-void delete(struct DiffuseurList** head, int index){
+void remove_from_list(struct DiffuseurList** head, int index){
+    printf("Remove at index :%d ", index);
     int counter = 0;
     struct DiffuseurList* current = *head;
     struct DiffuseurList* prev;
     if(current != NULL && index == counter){
+        printf("Remove confirmed\n");
         *head = current->next;
         free(current);
         return;

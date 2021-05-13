@@ -48,11 +48,11 @@ char ** split_message(char * messsage) {
 
 void * check_diffuseur(void * arg) {
   struct DiffuseurList * head = arg;
-
+  struct DiffuseurList * head_copy = arg;
+  int index = 0;
   while (1) {
     if (head -> next != NULL) {
       char ** message_information = split_message(head -> next -> diffuseur_information);
-      printf("%s : %s", message_information[3], message_information[4]);
 
       int port = atoi(message_information[4]);
       struct sockaddr_in adress_sock;
@@ -63,23 +63,48 @@ void * check_diffuseur(void * arg) {
       int descr = socket(PF_INET, SOCK_STREAM, 0);
       int r = connect(descr, (struct sockaddr * ) & adress_sock,
         sizeof(struct sockaddr_in));
-      if (r != -1) {
+   
         char * mess = "RUOK\r\n";
         send(descr, mess, strlen(mess), 0);
 
-        char buff[100];
-        int size_rec = recv(descr, buff, 99 * sizeof(char), 0);
-        buff[size_rec] = '\0';
-        printf("%s\n", buff);
-        close(descr);
-      }
+        struct timeval tv;
+        fd_set initial;
+        int ret = 0;
+        tv.tv_sec = 2;
+        tv.tv_usec = 500000;
+        FD_ZERO( & initial);
+        FD_SET(descr, & initial);
+        while (1) {
+          fd_set rfds;
+          rfds = initial;
+          ret = select(descr + 1, & rfds, NULL, NULL, & tv);
+          if (FD_ISSET(descr, & rfds)) {
+            char buff[100];
+            int size_rec = recv(descr, buff, 99 * sizeof(char), 0);
+            buff[size_rec] = '\0';
+            break;
+          } else {
+            printf("Timed out, removing diffuseur:  %s .\n", head->next->diffuseur_information);
+            remove_from_list(&head_copy->next,index);
+            break;
+          }
+        }
+        /* .... */
+        
+    
+  if (head -> next != NULL) {
+      head = head -> next;  
 
-      head = head -> next;
+  }
+      index = index +1;
+
 
     } else {
       head = arg;
+      index = 0;
+         sleep(3);
     }
-    sleep(1);
+ 
   }
 
 }

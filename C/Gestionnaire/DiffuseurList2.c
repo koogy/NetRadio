@@ -116,36 +116,16 @@ int isInList(struct DiffuseurList * node, char * message){
     return 0;
 }
 
-void *thread_print_list(void *arg){
-    struct DiffuseurList *head  = arg;
-    while(1){
-    print_list(head->next);
-    sleep(2);
-    }
-};
-
-
-void *thread_insert_into_list(void * arg){
-         struct DiffuseurList *head  = arg;
-     while(1){
-            printf("I'm here");
-            push_to_list(head,"feafea");
-            push_to_list(head,"sqfsqfs");
-            sleep(1);
-    }
-}
 int main(){
 
     struct DiffuseurList *head = NULL;
     head = (struct DiffuseurList *) malloc(sizeof(struct DiffuseurList));
-    push_to_list(head,"haha");
+    push_to_list(head,"haha"); 
+    push_to_list(head,"hahe"); 
+    push_to_list(head,"hahu"); 
 
-    pthread_t t_dc;
-    pthread_t t_dp;
-    pthread_create(&t_dc, NULL, thread_print_list, head);
-    pthread_create(&t_dp, NULL, thread_insert_into_list, head);
-    pthread_join(t_dc,NULL);
-    pthread_join(t_dp,NULL);
+    delete(&head->next,0);
+    print_list(head->next);
 
 
   

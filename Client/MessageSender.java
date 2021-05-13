@@ -25,7 +25,6 @@ public class MessageSender implements Runnable {
                 Socket socket = new Socket(client.diffuseur_address, client.tcp_port);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-                System.out.println("------\n" + "Hello babe");
                 String message = "";
                 String user_input = "";
                 if (last_message_type == MessageType.NONE) {
@@ -78,14 +77,12 @@ public class MessageSender implements Runnable {
                 }
 
                 if (last_message_type == MessageType.LAST) {
-                    System.out.println("In LAST");
                     String message_from_server = in.readLine();
                     while (!message_from_server.equals(MessageType.ENDM.getValue())) {
                         System.out.println(message_from_server);
                         message_from_server = in.readLine();
                     }
 
-                    System.out.println("Set flag to true");
                     last_message_type = MessageType.NONE;
                 } else if (last_message_type == MessageType.MESS) {
                     String message_from_server = in.readLine();
@@ -101,8 +98,6 @@ public class MessageSender implements Runnable {
                     }
 
                 }
-
-                System.out.println("Bye babe");
 
                 out.close();
                 socket.close();

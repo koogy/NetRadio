@@ -61,8 +61,6 @@ struct DiffuseurList* head = arg;
         message[read]='\0';
 
          if(startsWith("REGI",message)){
-            printf("It's a REGI \n");
-
             if(canAdd(head->next) && isInList(head->next,message) != 1){
                 char *message_cpy = malloc(160);
                 strcpy(message_cpy,message);
@@ -76,12 +74,14 @@ struct DiffuseurList* head = arg;
 
             
         } else if(startsWith("LIST",message)){
-            printf("It's a LIST \n");
             char s[11];
-            sprintf(s, "LINB %d\r\n", getSize(head));
+            sprintf(s, "LINB %d\r\n", getSize(head->next));
             send(new_fd,s,11,0);
-         
-            struct DiffuseurList *current = head;
+            struct DiffuseurList *current;
+            if(head->next != NULL){
+             current= head->next;
+
+            }
             while(current != NULL){
                 char formatted_message[39] = "ITEM ";
                 strcat(formatted_message,(current->diffuseur_information)+5);
