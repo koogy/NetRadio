@@ -33,6 +33,7 @@ public class DiffuseurTCP implements Runnable {
                         + this.diffuseur.tcp_port
                         );
                         
+                        System.out.println(in.readLine());
                         out.close();
                         
                     }  else {

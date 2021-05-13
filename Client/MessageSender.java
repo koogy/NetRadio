@@ -103,7 +103,6 @@ public class MessageSender implements Runnable {
                 socket.close();
             }
         } catch (Exception exception) {
-            exception.printStackTrace();
         }
 
     }

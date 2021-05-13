@@ -66,8 +66,12 @@ struct DiffuseurList* head = arg;
                 strcpy(message_cpy,message);
                 printf("Adding to list...%s : %p \n", message_cpy, message_cpy);
                 push_to_list(head,message_cpy);
+                
+                char * message ="REOK\r\n";
+                send(new_fd,message,strlen(message),0);
             } else {
-                printf("Can't add anymore, closing socket... \n");
+                char * message ="RENO\r\n";
+                send(new_fd,message,strlen(message),0);
                 close(new_fd); 
             }
 

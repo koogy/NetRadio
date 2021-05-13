@@ -1,16 +1,16 @@
 CC=gcc
-CFLAGS = -g -Wall -std=c11
+CFLAGS = -Wall -pthread
 
-SRC :=   $(wildcard core/*.c) $(wildcard utils/*.c) $(wildcard commands/*.c) $(wildcard *.c)
+SRC :=   $(wildcard *.c) 
 
 OBJECTS = $(SRC:.c=.o) 
 
 main : $(OBJECTS)
-	gcc -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^
 
 start:
 	./main
 
 clean:
 	rm -rf $(OBJECTS)
-	rm star
+	rm main

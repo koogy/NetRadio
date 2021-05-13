@@ -15,9 +15,9 @@ char * getIdentifiant(char * message)
 {   
     int size = 8;
     char * message_copy = message+5; /*  ----|######## */
-    char * id = malloc(9);
+    char * id = malloc(size+1);
     char * id_copy= id;
-    memset(id,'#',8);
+    memset(id,'#',size);
     id[8] = '\0';
     int i = 0;
     while(1){
