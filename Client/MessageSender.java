@@ -20,9 +20,8 @@ public class MessageSender implements Runnable {
         boolean validMessage = false;
         MessageType last_message_type = MessageType.NONE;
 
-       
-            while (true) {
-                try {
+        while (true) {
+            try {
                 Socket socket = new Socket(client.diffuseur_address, client.tcp_port);
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
@@ -30,47 +29,46 @@ public class MessageSender implements Runnable {
                 String user_input = "";
                 if (last_message_type == MessageType.NONE) {
                     user_input = input_reader.readLine();
-                        if (user_input.startsWith(MessageType.MESS.getValue())) {
+                    if (user_input.startsWith(MessageType.MESS.getValue())) {
+                        message = user_input.substring(5, user_input.length());
+                        Message.sendMessage(out, MessageType.MESS.getValue() + client.client_id + " " + message);
+                        validMessage = true;
+                        last_message_type = MessageType.MESS;
+
+                    } else if (user_input.startsWith(MessageType.LAST.getValue())) {
+                        try {
+                            /* Quel comportement si nb > au nombre de message dans le diffuseur ? */
                             message = user_input.substring(5, user_input.length());
-                            Message.sendMessage(out, MessageType.MESS.getValue() + client.client_id + " " + message);
-                            validMessage = true;
-                            last_message_type = MessageType.MESS;
-
-                        } else if (user_input.startsWith(MessageType.LAST.getValue())) {
-                            try {
-                                /* Quel comportement si nb > au nombre de message dans le diffuseur ? */
-                                message = user_input.substring(5, user_input.length());
-
-                                int nb = Integer.parseInt(message);
-                                if (nb < 0 || nb > 999) {
-                                    throw new NumberFormatException();
-                                }
-                            } catch (NumberFormatException nb) {
-                                System.out.println("Wrong format : LAST␣nb-mess where nb-mess >=0 and nb-mess <= 999");
-                                out.close();
-                                socket.close();
-                                continue;
+                            int nb = Integer.parseInt(message);
+                            if (nb < 0 || nb > 999) {
+                                throw new NumberFormatException();
                             }
-                            Message.sendMessage(out,MessageType.LAST.getValue() + Message.formatNumber(message, "000"));
-                            validMessage = true;
-                            last_message_type = MessageType.LAST;
-                        } else if (user_input.equals(MessageType.LIST.getValue())) {
-                            /* Instead of client._tcp_port it has to be the gestionnaire port */
-                            Socket socket_l = new Socket("localhost", client.gestionnaire_port);
-                            BufferedReader in_l = new BufferedReader(new InputStreamReader(socket_l.getInputStream()));
-                            PrintWriter out_l = new PrintWriter(new OutputStreamWriter(socket_l.getOutputStream()));
-
-                            Message.sendMessage(out_l,"LIST");
-                            String message_from_server = in_l.readLine();
-                            System.out.println(message_from_server);
-                            int num_diff = Integer.parseInt(message_from_server.substring(5,message_from_server.length() ));
-                            for( int i = 0 ; i < num_diff ; i++){
-                                System.out.println(in_l.readLine());
-                            } 
-                        } else {
-                            System.out.println("Unknown command");
-                            validMessage = false;
+                        } catch (NumberFormatException nb) {
+                            System.out.println("Wrong format : LAST␣nb-mess where nb-mess >=0 and nb-mess <= 999");
+                            out.close();
+                            socket.close();
+                            continue;
                         }
+                        Message.sendMessage(out, MessageType.LAST.getValue() + Message.formatNumber(message, "000"));
+                        validMessage = true;
+                        last_message_type = MessageType.LAST;
+                    } else if (user_input.equals(MessageType.LIST.getValue())) {
+                        /* Instead of client._tcp_port it has to be the gestionnaire port */
+                        Socket socket_l = new Socket("localhost", client.gestionnaire_port);
+                        BufferedReader in_l = new BufferedReader(new InputStreamReader(socket_l.getInputStream()));
+                        PrintWriter out_l = new PrintWriter(new OutputStreamWriter(socket_l.getOutputStream()));
+
+                        Message.sendMessage(out_l, "LIST");
+                        String message_from_server = in_l.readLine();
+                        System.out.println(message_from_server);
+                        int num_diff = Integer.parseInt(message_from_server.substring(5, message_from_server.length()));
+                        for (int i = 0; i < num_diff; i++) {
+                            System.out.println(in_l.readLine());
+                        }
+                    } else {
+                        System.out.println("Unknown command");
+                        validMessage = false;
+                    }
                 }
                 if (last_message_type == MessageType.LAST) {
                     String message_from_server = in.readLine();
@@ -99,11 +97,10 @@ public class MessageSender implements Runnable {
 
                 out.close();
                 socket.close();
-            }
-            catch (Exception exception) {
+            } catch (Exception exception) {
                 System.out.println("Not connected to diffuseur yet...");
             }
-        } 
+        }
 
     }
 }

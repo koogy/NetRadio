@@ -1,4 +1,5 @@
 package Diffuseur;
+
 import java.io.*;
 import java.util.ArrayList;
 import Messages.*;
@@ -15,28 +16,26 @@ public class Diffuseur {
     ArrayList<String> messages_sent;
 
     public Diffuseur(String filename) {
-        diffuseur_messages = new MessageDiffuseur();
         messages_sent = new ArrayList<String>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
 
-            this.diffuseur_id =reader.readLine();
-            this.multidiffusion_address =Message.formatIPaddress(reader.readLine());
-            this.multidiffusion_port =Integer.parseInt(reader.readLine());
-            this.tcp_port =Integer.parseInt(reader.readLine());
-            this.gestionnaire_port =Integer.parseInt(reader.readLine());
-        
+            this.diffuseur_id = Message.formatID(reader.readLine());
+            this.multidiffusion_address = Message.formatIPaddress(reader.readLine());
+            this.multidiffusion_port = Integer.parseInt(reader.readLine());
+            this.tcp_port = Integer.parseInt(reader.readLine());
+            this.gestionnaire_port = Integer.parseInt(reader.readLine());
+
             reader.close();
         } catch (Exception e) {
             System.err.format("Exception occurred trying to read '%s'.", filename);
             e.printStackTrace();
 
         }
+
+        diffuseur_messages = new MessageDiffuseur(this.diffuseur_id);
+
     }
-
- 
-
-
 
     public void display_diffuseur_information() {
         System.out.println("---------------------------------------");
