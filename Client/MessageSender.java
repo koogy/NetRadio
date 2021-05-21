@@ -113,7 +113,15 @@ public class MessageSender implements Runnable {
                         System.out.println(message_from_server);
                         last_message_type = MessageType.NONE;
                     }
-                } else {
+                } else if (last_message_type == MessageType.MDIF) {
+                    String message_from_server = in.readLine();
+                    System.out.println("\n================");
+                    if (message_from_server.startsWith(MessageType.MYOU.getValue())) {
+                        System.out.println(message_from_server);
+                        System.out.println("================\n");
+                        last_message_type = MessageType.NONE;
+                    }
+                }else {
                     if (validMessage) {
                         String message_from_server = in.readLine();
                         System.out.println(message_from_server);

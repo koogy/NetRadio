@@ -45,10 +45,19 @@ public class ReceptionTCP implements Runnable {
                                 
                                 // MYOU serait donc un nouveau type de message, en reponse a MDIF
                                 } else if (message.startsWith(MessageType.MDIF.getValue())) {
-                               
+                                    
                                     int num_mess = Integer.parseInt(message.substring(5, 8));
-                                    Message.sendMessage(out, MessageType.MYOU.getValue() +(diffuseur.messages_sent
-                                                .get(num_mess)));
+
+                                    if (num_mess < diffuseur.messages_sent.size()){
+                                        Message.sendMessage(out, MessageType.MYOU.getValue() +(diffuseur.messages_sent
+                                                .get(num_mess + 1)));
+                                    }
+                                    else {
+                                        System.out.println("[Asking for a message not multicasted yet, so last multicasted message send]");
+                                        Message.sendMessage(out, MessageType.MYOU.getValue() +(diffuseur.messages_sent
+                                                .get(diffuseur.messages_sent.size() - 1)));
+                                    }
+
                              
                                 } else if (message.equals(MessageType.RUOK.getValue())) {
                                     Message.sendMessage(out, MessageType.IMOK.getValue());
