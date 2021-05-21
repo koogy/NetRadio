@@ -33,7 +33,6 @@ public class ReceptionTCP implements Runnable {
                                     
                                 } else if (message.startsWith(MessageType.LAST.getValue())) {
                                
-                                    /* Todo check number is >0 and <= 999 */
                                     int nb_mess = Integer.parseInt(message.substring(5, 8));
                                     
                                     while (nb_mess != 0 && nb_mess < diffuseur.diffuseur_messages.getSize()) {
@@ -43,6 +42,13 @@ public class ReceptionTCP implements Runnable {
                                         nb_mess -= 1;
                                     }
                                     Message.sendMessage(out, MessageType.ENDM.getValue());
+                                
+                                // MYOU serait donc un nouveau type de message, en reponse a MDIF
+                                } else if (message.startsWith(MessageType.MDIF.getValue())) {
+                               
+                                    int num_mess = Integer.parseInt(message.substring(5, 8));
+                                    Message.sendMessage(out, MessageType.MYOU.getValue() +(diffuseur.messages_sent
+                                                .get(num_mess)));
                              
                                 } else if (message.equals(MessageType.RUOK.getValue())) {
                                     Message.sendMessage(out, MessageType.IMOK.getValue());

@@ -62,20 +62,20 @@ public class Gestionnaire {
                                     out.close();
                                     socket.close();
                                      */
-				}else if (message.startsWith(MessageType.MGES.getValue())) {
-				    String message_m = message.substring(5, message.length());
+                                }else if (message.startsWith(MessageType.MGES.getValue())) {
+                                    String message_m = message.substring(5, message.length());
                                     for( int i = 0 ; i < diffuseur_list.getSize();i++){
                                         Socket diffuseur_socket = diffuseur_list.getList().get(i).getSocket();
-					BufferedReader in_m = new BufferedReader(new InputStreamReader(diffuseur_socket.getInputStream()));
+                                        BufferedReader in_m = new BufferedReader(new InputStreamReader(diffuseur_socket.getInputStream()));
                                         PrintWriter out_m = new PrintWriter(new OutputStreamWriter(diffuseur_socket.getOutputStream()));
                                         Message.sendMessage(out_m, MessageType.MESS.getValue() + " " + message_m);
-					String message_from_server = in.readLine();
-					if (message_from_server.equals(MessageType.ACKM.getValue())) {
-					    System.out.println(message_from_server);
-					}
+                                        String message_from_server = in.readLine();
+                    					if (message_from_server.equals(MessageType.ACKM.getValue())) {
+                    					    System.out.println(message_from_server);
+                    					}
                                         in_m.close();
-				        out_m.close();
-				        diffuseur_socket.close();
+                    				    out_m.close();
+                    				    diffuseur_socket.close();
                                     }
                                    /*  in.close();
                                     out.close();

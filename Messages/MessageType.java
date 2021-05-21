@@ -6,7 +6,8 @@ public enum MessageType {
    LAST("LAST "), OLDM("OLDM "), ENDM("ENDM"), 
    REGI("REGI"), REOK("REOK "), RENO("RENO "), 
    RUOK("RUOK"), IMOK("IMOK "), LIST("LIST"),
-   LINB("LINB "), ITEM("ITEM "), MGES("MGES "),  NONE("");
+   LINB("LINB "), ITEM("ITEM "), MGES("MGES "),
+   MDIF("MDIF "), MYOU("MYOU "), NONE("");
    
    String value;
    private MessageType(String value){
