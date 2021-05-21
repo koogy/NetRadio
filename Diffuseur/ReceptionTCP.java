@@ -28,8 +28,6 @@ public class ReceptionTCP implements Runnable {
                             if (message != null) {
                                 if (message.startsWith(MessageType.MESS.getValue())) {
                                     System.out.println("[MESS] Message added");
-                                    System.out.println(message);
-
                                     String [] message_split = message.split(" ");
                                     
                                     diffuseur.diffuseur_messages.addMessage(Message.formatID(message_split[1]) + " " + message_split[2]);
