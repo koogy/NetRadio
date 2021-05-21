@@ -65,6 +65,31 @@ public class MessageSender implements Runnable {
                         for (int i = 0; i < num_diff; i++) {
                             System.out.println(in_l.readLine());
                         }
+                    //MGES serait donc un nouveau type de message
+                    } else if (user_input.startsWith(MessageType.MGES.getValue())) {
+                        Socket socket_l = new Socket("localhost", client.gestionnaire_port);
+                        BufferedReader in_l = new BufferedReader(new InputStreamReader(socket_l.getInputStream()));
+                        PrintWriter out_l = new PrintWriter(new OutputStreamWriter(socket_l.getOutputStream()));
+                        message = user_input.substring(5, user_input.length());
+                        Message.sendMessage(out_l, MessageType.MGES.getValue() + client.client_id + " " + message);
+                         
+                    //MDIF serait donc un nouveau type de message
+                    }else if (user_input.startsWith(MessageType.MDIF.getValue())) {
+                        try {
+                            message = user_input.substring(5, user_input.length());
+                            int nb_d = Integer.parseInt(message);
+                            if (nb_d < 0 || nb_d > 999) {
+                                throw new NumberFormatException();
+                            }
+                        } catch (NumberFormatException nb_d) {
+                            System.out.println("Wrong format : MDIF␣num-mess where num-mess >=0 and num-mess <= 999");
+                            out.close();
+                            socket.close();
+                            continue;
+                        }
+                        Message.sendMessage(out,MessageType.MDIF.getValue() + Message.formatNumber(message, "000"));
+                        validMessage = true;
+                        last_message_type = MessageType.MDIF; 
                     } else {
                         System.out.println("Unknown command");
                         validMessage = false;
@@ -84,6 +109,14 @@ public class MessageSender implements Runnable {
                     String message_from_server = in.readLine();
                     if (message_from_server.equals(MessageType.ACKM.getValue())) {
                         System.out.println(message_from_server);
+                        last_message_type = MessageType.NONE;
+                    }
+                } else if (last_message_type == MessageType.MDIF) {
+                    String message_from_server = in.readLine();
+                    System.out.println("\n================");
+                    if (message_from_server.startsWith(MessageType.MYOU.getValue())) {
+                        System.out.println(message_from_server);
+                        System.out.println("================\n");
                         last_message_type = MessageType.NONE;
                     }
                 } else {

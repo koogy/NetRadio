@@ -7,13 +7,21 @@ clean:
 	rm Diffuseur/*.class
 	rm Client/*.class
 
-diff:
+diff1:
 	javac Diffuseur/*.java
 	java Diffuseur.Diffuseur Configs/Diffuseur/diff-1.txt 
 
-cli:
+diff2:
+	javac Diffuseur/*.java
+	java Diffuseur.Diffuseur Configs/Diffuseur/diff-2.txt 
+
+cli1:
 	javac Client/*.java
 	java Client.Client Configs/Client/client-1.txt 
+
+cli2:
+	javac Client/*.java
+	java Client.Client Configs/Client/client-2.txt 
 
 ges:
 	javac Gestionnaire/*.java
