@@ -34,7 +34,6 @@ char * getIdentifiant(char * message)
     return id;
 }
 
-
 int getSize(struct DiffuseurList* head){
       struct DiffuseurList* current = head;
       if(current == NULL){
@@ -58,9 +57,7 @@ int canAdd(struct DiffuseurList* head){
 
 
 void push_to_list(struct DiffuseurList* head, char * diffuseur_information){
-    
-    
-      struct DiffuseurList*  current = head;
+    struct DiffuseurList*  current = head;
     while (current->next != NULL) {
         current = current->next;
     }
@@ -69,8 +66,6 @@ void push_to_list(struct DiffuseurList* head, char * diffuseur_information){
     current->next = (struct DiffuseurList*) malloc(sizeof(struct DiffuseurList*));
     current->next->diffuseur_information = diffuseur_information;
     current->next->next = NULL;
-    
-  
 }
 
 void print_list(struct DiffuseurList* node){
@@ -114,7 +109,6 @@ int isInList(struct DiffuseurList * node, char * message){
         if(strcmp(message_to_add,current_message)==0){
             return 1;
         };
-
         node = node->next;
     }
 

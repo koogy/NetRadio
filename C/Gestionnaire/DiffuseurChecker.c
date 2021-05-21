@@ -66,7 +66,7 @@ void * check_diffuseur(void * arg) {
    
         char * mess = "RUOK\r\n";
         send(descr, mess, strlen(mess), 0);
-
+      
         struct timeval tv;
         fd_set initial;
         tv.tv_sec = 1;

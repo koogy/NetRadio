@@ -34,12 +34,12 @@ public class MessageDiffuseur {
         return num_mess;
     }
 
-    public String getMessage(){
+    public synchronized String getMessage(){
         num_mess +=1;
         return diffuseur_messages.get(num_mess % getSize());
     }
 
-    public String getMessage(int index){
+    public synchronized String getMessage(int index){
         return diffuseur_messages.get(index);
     }
 
