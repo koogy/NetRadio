@@ -83,7 +83,7 @@ public class MessageSender implements Runnable {
                                 if (nb_d < 0 || nb_d > 999) {
                                     throw new NumberFormatException();
                                 }
-                            } catch (NumberFormatException nb) {
+                            } catch (NumberFormatException nb_d) {
                                 System.out.println("Wrong format : MDIF␣num-mess where num-mess >=0 and num-mess <= 999");
                                 out.close();
                                 socket.close();
