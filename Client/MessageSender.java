@@ -118,6 +118,10 @@ public class MessageSender implements Runnable {
                         System.out.println(message_from_server);
                         System.out.println("================\n");
                         last_message_type = MessageType.NONE;
+                    } else if (message_from_server.equals(MessageType.MERR.getValue())) {
+                        System.out.println(message_from_server);
+                        System.out.println("================\n");
+                        last_message_type = MessageType.NONE;
                     }
                 } else {
                     if (validMessage) {

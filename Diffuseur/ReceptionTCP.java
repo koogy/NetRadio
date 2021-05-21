@@ -60,11 +60,9 @@ public class ReceptionTCP implements Runnable {
                                         System.out.println("[MDIF] Sending message " + (num_mess));
                                         Message.sendMessage(out, MessageType.MYOU.getValue() +(diffuseur.messages_sent
                                                 .get(num_mess + 1)));
-                                    }
-                                    else {
-                                        System.out.println("[MDIF] Asking for a message not multicasted yet, so last multicasted message send");
-                                        Message.sendMessage(out, MessageType.MYOU.getValue() +(diffuseur.messages_sent
-                                                .get(diffuseur.messages_sent.size() - 1)));
+                                    } else {
+                                        System.out.println("[MDIF] Error : Asking for a message not multicasted yet. Error message sent !");
+                                        Message.sendMessage(out, MessageType.MERR.getValue());
                                     }
 
                                 } else if (message.equals(MessageType.RUOK.getValue())) {

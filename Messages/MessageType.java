@@ -6,7 +6,8 @@ public enum MessageType {
    REGI("REGI"), REOK("REOK "), RENO("RENO "), 
    RUOK("RUOK"), IMOK("IMOK "), LIST("LIST"), 
    LINB("LINB "), ITEM("ITEM "), MGES("MGES "), 
-   MDIF("MDIF "), MYOU("MYOU "), NONE("");
+   MDIF("MDIF "), MYOU("MYOU "), MERR(" [MERR] ERROR : Asking for a message not multicasted yet !"), 
+   NONE("");
 
    String value;
 
