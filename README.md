@@ -9,7 +9,7 @@
 - cd projetpr6_netradio
 - make : pour compiler tous les fichiers puis 
 - Pour compiler et éxecuter le diffuseur 
-    - make difX où X est le numéro du fichier config du diffuseur
+    - make diffX où X est le numéro du fichier config du diffuseur
 - Pour compiler et éxecuter le client 
     - make cliX où X est le numéro du fichier config du client
 - Pour éxecuter le gestionnaire
