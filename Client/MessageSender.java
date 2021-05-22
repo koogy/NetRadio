@@ -31,7 +31,7 @@ public class MessageSender implements Runnable {
                     user_input = input_reader.readLine();
                     if (user_input.startsWith(MessageType.MESS.getValue())) {
                         message = user_input.substring(5, user_input.length());
-                        Message.sendMessage(out, MessageType.MESS.getValue() + client.client_id + " " + message);
+                        Message.sendMessage(out, MessageType.MESS.getValue() + " "+ client.client_id + " " + message);
                         validMessage = true;
                         last_message_type = MessageType.MESS;
 
@@ -49,7 +49,7 @@ public class MessageSender implements Runnable {
                             socket.close();
                             continue;
                         }
-                        Message.sendMessage(out, MessageType.LAST.getValue() + Message.formatNumber(message, "000"));
+                        Message.sendMessage(out, MessageType.LAST.getValue() + " " + Message.formatNumber(message, "000"));
                         validMessage = true;
                         last_message_type = MessageType.LAST;
                     } else if (user_input.equals(MessageType.LIST.getValue())) {
@@ -71,8 +71,8 @@ public class MessageSender implements Runnable {
                         BufferedReader in_l = new BufferedReader(new InputStreamReader(socket_l.getInputStream()));
                         PrintWriter out_l = new PrintWriter(new OutputStreamWriter(socket_l.getOutputStream()));
                         message = user_input.substring(5, user_input.length());
-                        Message.sendMessage(out_l, MessageType.MGES.getValue() + client.client_id + " " + message);
-                         
+                        Message.sendMessage(out_l, MessageType.MGES.getValue() +" " + client.client_id + " " + message);
+                        
                     //MDIF serait donc un nouveau type de message
                     }else if (user_input.startsWith(MessageType.MDIF.getValue())) {
                         try {
@@ -87,7 +87,7 @@ public class MessageSender implements Runnable {
                             socket.close();
                             continue;
                         }
-                        Message.sendMessage(out,MessageType.MDIF.getValue() + Message.formatNumber(message, "000"));
+                        Message.sendMessage(out,MessageType.MDIF.getValue()+ " " + Message.formatNumber(message, "000"));
                         validMessage = true;
                         last_message_type = MessageType.MDIF; 
                     } else {
@@ -114,7 +114,7 @@ public class MessageSender implements Runnable {
                 } else if (last_message_type == MessageType.MDIF) {
                     String message_from_server = in.readLine();
                     System.out.println("\n================");
-                    if (message_from_server.startsWith(MessageType.MYOU.getValue())) {
+                    if (message_from_server.startsWith(MessageType.MDOK.getValue())) {
                         System.out.println(message_from_server);
                         System.out.println("================\n");
                         last_message_type = MessageType.NONE;

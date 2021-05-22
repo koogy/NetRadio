@@ -23,7 +23,7 @@ public class DiffuseurUDP implements Runnable {
             while (true) {
                 Thread.sleep(3000);
                 String diffuseur_message = "";
-                diffuseur_message = MessageType.DIFF.getValue();
+                diffuseur_message = MessageType.DIFF.getValue() + " ";
                 diffuseur_message += Message.formatNumber(diffuseur.diffuseur_messages.getNum_mess(), "0000") + " ";
                 
                 String mess = diffuseur.diffuseur_messages.getMessage();

@@ -108,13 +108,8 @@ void *start_gestionnaire(void *arg)
                 current = current->next;
             }
         }
-        else if (startsWith("MGES", message))
+        else if (startsWith("MGES ", message))
         {
-            char mess[156];
-            memcpy(mess, &message[5], 155);
-            mess[155] = '\0';
-            char formatted_message[160] = "MESS ";
-            strcat(formatted_message, mess + 5);
             struct DiffuseurList *current;
             if (head->next != NULL)
             {
@@ -132,14 +127,11 @@ void *start_gestionnaire(void *arg)
                 connect(descr, (struct sockaddr *)&adress_sock,
                         sizeof(struct sockaddr_in));
 
-                send(descr, formatted_message, strlen(formatted_message), 0);
-                char buff[100];
-                int size_rec = recv(descr, buff, 99 * sizeof(char), 0);
-                buff[size_rec] = '\0';
-                //printf("%s\n", buff);
-
+                send(descr, message, strlen(message), 0);
                 current = current->next;
             }
+        } else if (startsWith("MGOK", message)){
+            printf("MGOK");
         }
         else
         {

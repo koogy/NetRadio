@@ -32,7 +32,14 @@ public class ReceptionTCP implements Runnable {
 
                                     diffuseur.diffuseur_messages
                                             .addMessage(Message.formatID(message_split[1]) + " " + message_split[2]);
-                                    Message.sendMessage(out, (MessageType.ACKM.getValue()).substring(0, 4));
+                                    Message.sendMessage(out, (MessageType.ACKM.getValue()));
+
+                                } else if (message.startsWith(MessageType.MGES.getValue())) {
+                                    System.out.println("[MGES] Message added");
+                                    System.out.println("Message MGES :" + message);
+                                    String[] message_split = message.split(" ");
+                                    diffuseur.diffuseur_messages
+                                            .addMessage(Message.formatID(message_split[1]) + " " + message_split[2]);
 
                                 } else if (message.startsWith(MessageType.LAST.getValue())) {
                                     int nb_mess = Integer.parseInt(message.substring(5, 8));
@@ -40,7 +47,7 @@ public class ReceptionTCP implements Runnable {
                                         System.out.println("[LAST] Sending the " + nb_mess + " last messages");
                                         while (nb_mess != 0 && nb_mess < diffuseur.messages_sent.size()) {
                                             Message.sendMessage(out,
-                                                    MessageType.OLDM.getValue() + (diffuseur.messages_sent
+                                                    MessageType.OLDM.getValue() + " " + (diffuseur.messages_sent
                                                             .get(diffuseur.messages_sent.size() - nb_mess)));
                                             nb_mess -= 1;
                                         }
@@ -48,17 +55,16 @@ public class ReceptionTCP implements Runnable {
 
                                     Message.sendMessage(out, MessageType.ENDM.getValue());
 
-                                    // MYOU serait donc un nouveau type de message, en reponse a MDIF
                                 } else if (message.startsWith(MessageType.MDIF.getValue())) {
 
                                     int num_mess = Integer.parseInt(message.substring(5, 8));
 
                                     if (num_mess < diffuseur.messages_sent.size()) {
                                         System.out.println("[MDIF] Sending message " + (num_mess));
-                                        Message.sendMessage(out, MessageType.MYOU.getValue()
+                                        Message.sendMessage(out, MessageType.MDOK.getValue() + " "
                                                 + (diffuseur.messages_sent.get(num_mess + 1)));
                                     } else {
-                                        System.out.println("[MDIF] Error : Message not diffused yet.!");
+                                        System.out.println("[MDIF] Error : Message n°" + num_mess + " doesn't exist");
                                         Message.sendMessage(out, MessageType.MERR.getValue());
                                     }
 
