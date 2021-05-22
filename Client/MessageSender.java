@@ -29,7 +29,7 @@ public class MessageSender implements Runnable {
                 if (last_message_type == MessageType.NONE) {
                     user_input = input_reader.readLine();
 
-                    if(user_input.equals("DISPLAY")){
+                    if (user_input.equals("DISPLAY")) {
                         client.display = !client.display;
                         out.close();
                         socket.close();
@@ -73,7 +73,7 @@ public class MessageSender implements Runnable {
                         }
                         validMessage = true;
                         last_message_type = MessageType.LIST;
-                    } else if (user_input.startsWith(MessageType.MGES.getValue()) && user_input.length()>5 ) {
+                    } else if (user_input.startsWith(MessageType.MGES.getValue()) && user_input.length() > 5) {
                         Socket socket_l = new Socket(client.gestionnaire_address, client.gestionnaire_port);
                         BufferedReader in_l = new BufferedReader(new InputStreamReader(socket_l.getInputStream()));
                         PrintWriter out_l = new PrintWriter(new OutputStreamWriter(socket_l.getOutputStream()));
@@ -81,6 +81,8 @@ public class MessageSender implements Runnable {
                         Message.sendMessage(out_l,
                                 MessageType.MGES.getValue() + " " + client.client_id + " " + message);
 
+                        validMessage = true;
+                        last_message_type = MessageType.MGES;
                     } else if (user_input.startsWith(MessageType.MDIF.getValue()) && user_input.length() > 5) {
                         try {
                             message = user_input.substring(5, user_input.length());
@@ -136,11 +138,16 @@ public class MessageSender implements Runnable {
                 } else if (last_message_type == MessageType.LIST) {
                     System.out.println("================\n");
                     last_message_type = MessageType.NONE;
+                }
+                
+                else if (last_message_type == MessageType.MGES) {
+                    System.out.println("================\n");
+                    last_message_type = MessageType.NONE;
                 } else {
                     if (validMessage) {
                         String message_from_server = in.readLine();
                         System.out.println(message_from_server);
-                        
+
                     }
                     last_message_type = MessageType.NONE;
 
