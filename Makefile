@@ -2,6 +2,7 @@ all:
 	javac Diffuseur/*.java
 	javac Client/*.java
 	javac Messages/*.java
+	cd Gestionnaire && $(MAKE)
 
 clean:
 	rm Diffuseur/*.class
@@ -23,6 +24,19 @@ cli2:
 	javac Client/*.java
 	java Client.Client Configs/Client/client-2.txt 
 
+<<<<<<< HEAD
 ges:
 	javac Gestionnaire/*.java
 	java Gestionnaire.Gestionnaire
+=======
+
+ges1:
+	cd Gestionnaire && ./main ../Configs/Gestionnaire/gestionnaire-1.txt
+
+ges2:
+	cd Gestionnaire && ./main ../Configs/Gestionnaire/gestionnaire-2.txt
+
+ges3:
+	cd Gestionnaire && ./main ../Configs/Gestionnaire/gestionnaire-3.txt
+
+>>>>>>> 4b1dda7a8cb22d3583e35149041440595c487bc1

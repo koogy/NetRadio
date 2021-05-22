@@ -5,8 +5,4 @@
 void *check_diffuseur(void *arg);
 char **split_message(char *messsage);
 
-
 #endif
-
-
-
