@@ -1,6 +1,13 @@
-DIFFBOI
+DIFFONE
 225.1.2.4
 4040
 3035
 127.0.0.1
 6065
+
+ligne 1: id du diffuseur sur 8 caractères
+ligne 2 : adresse ip de multidiffusion
+ligne 3: port de multi-diffusion
+ligne 4: port de réception TCP
+ligne 5: adresse ip du gestionnaire
+ligne 6: port du gestionnaire

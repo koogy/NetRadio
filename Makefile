@@ -16,6 +16,10 @@ diff2:
 	javac Diffuseur/*.java
 	java Diffuseur.Diffuseur Configs/Diffuseur/diff-2.txt 
 
+diffA:
+	javac Diffuseur/*.java
+	java Diffuseur.Diffuseur Configs/Diffuseur/diff-A.txt 
+
 cli1:
 	javac Client/*.java
 	java Client.Client Configs/Client/client-1.txt 
@@ -24,6 +28,9 @@ cli2:
 	javac Client/*.java
 	java Client.Client Configs/Client/client-2.txt 
 
+cliA:
+	javac Client/*.java
+	java Client.Client Configs/Client/client-A.txt 
 
 ges1:
 	cd Gestionnaire && ./main ../Configs/Gestionnaire/gestionnaire-1.txt

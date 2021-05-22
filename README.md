@@ -36,3 +36,18 @@
     - **Gestionnaire.c** : Reception des messages venant du client, diffuseur
         - DiffuseurList.c : implementation d'une linkedlist pour stocker les diffuseurs
         - DiffuseurChecker.c : Vérifie si les diffuseurs sont toujours catifs 
+
+# Extensions implementés : 
+    - MDIF : Un client peut demander la rediffusion d'un message au diffuseur 
+    - MGES : Un client peut envoyer un message au gestionnaire qui devra le transmettre à tous ses diffuseurs
+
+# Commande du client
+    - MESS
+    - LIST
+    - LAST 
+    - MDIF X où X est le numéro du message à rediffuser
+    - MGES X où X est le message à transmettre à tous les diffuseurs 
+
+# Commandes du diffuseur
+    - REGI
+
