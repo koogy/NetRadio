@@ -1,0 +1,15 @@
+{
+    "java.project.sourcePaths": [
+        "Testing"
+    ],
+    "files.associations": {
+        "stdbool.h": "c",
+        "string.h": "c",
+        "pthread.h": "c",
+        "diffuseurlist.h": "c",
+        "stdio.h": "c",
+        "diffuseurchecker.h": "c",
+        "stdlib.h": "c",
+        "select.h": "c"
+    }
+}
