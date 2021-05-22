@@ -13,16 +13,41 @@
 #include <pthread.h>
 
 pthread_mutex_t lock;
+char *gestionnaire_address = NULL;
+char* gestionnaire_port = 0;
 
-char *formatNumber(int n){
-    char * num = malloc(3);
-     memset(num, '\0', 3);
-    if ( n < 10 ){
-        sprintf(num,"0%d",n);
-    } else {
-         sprintf(num,"%d",n);
+char *formatNumber(int n)
+{
+    char *num = malloc(3);
+    memset(num, '\0', 3);
+    if (n < 10)
+    {
+        sprintf(num, "0%d", n);
+    }
+    else
+    {
+        sprintf(num, "%d", n);
     }
 
+    return num;
+}
+
+char *formatNumberThree(int n)
+{
+    char *num = malloc(4);
+    memset(num, '\0', 4);
+    if (n < 10)
+    {
+        sprintf(num, "00%d", n);
+    }
+    else if (n < 100)
+    {
+        sprintf(num, "0%d", n);
+    }
+    else
+    {
+        sprintf(num, "%d", n);
+    }
     return num;
 }
 
@@ -45,7 +70,7 @@ void *start_gestionnaire(void *arg)
     hints.ai_flags = AI_PASSIVE;
     int sockfd, new_fd;
 
-    getaddrinfo(NULL, "6065", &hints, &servinfo);
+    getaddrinfo(gestionnaire_address, gestionnaire_port, &hints, &servinfo);
 
     for (p = servinfo; p != NULL; p = p->ai_next)
     {
@@ -119,8 +144,6 @@ void *start_gestionnaire(void *arg)
                 send(new_fd, formatted_message, strlen(current->diffuseur_information), 0);
                 current = current->next;
             }
-
-
         }
         else if (startsWith("MGES ", message))
         {
@@ -144,7 +167,9 @@ void *start_gestionnaire(void *arg)
                 send(descr, message, strlen(message), 0);
                 current = current->next;
             }
-        } else if (startsWith("MGOK", message)){
+        }
+        else if (startsWith("MGOK", message))
+        {
             printf("MGOK");
         }
         else
@@ -156,6 +181,49 @@ void *start_gestionnaire(void *arg)
 
 int main(int argc, char **argv)
 {
+    /* READ CONFIG FILE */
+    if(argc <2){
+        printf("Gestionnaire - Config file missing");
+        exit(0);
+    }
+
+     char * ip_address = NULL;
+    char * port_temp = NULL;
+    size_t len = 0;
+    FILE *fp = fopen(argv[1], "r"); 
+
+     if (fp == NULL){
+      perror("Error while opening the file.\n");
+      exit(EXIT_FAILURE);}
+
+    getline(&ip_address, &len, fp);
+    getline(&port_temp, &len, fp);
+    gestionnaire_port = (port_temp);
+
+    gestionnaire_address = malloc(16);
+    memset(gestionnaire_address,'\0',16);
+    char *ptr = strtok(ip_address, ".");
+
+    int count = 0;
+	while(ptr != NULL)
+	{
+        strcat(gestionnaire_address,formatNumberThree(atoi(ptr)));
+        if(count < 3){
+          strcat(gestionnaire_address,".");
+        }
+		ptr = strtok(NULL, ".");
+        count = count+1;
+	}
+
+    fclose(fp);
+    /* *************** */
+        printf("---------------------------------------\n");
+        printf("[GEST ADDRESS] : %s \n", gestionnaire_address);
+        printf("[GES PORT] : %s \n",gestionnaire_port);
+        printf("---------------------------------------\n");
+
+
+    /* **************** */
     struct DiffuseurList *head = NULL;
     head = (struct DiffuseurList *)malloc(sizeof(struct DiffuseurList));
     pthread_t t_gestionnaire;
