@@ -53,7 +53,7 @@ public class MessageSender implements Runnable {
                         last_message_type = MessageType.LAST;
                     } else if (user_input.equals(MessageType.LIST.getValue())) {
                         /* Instead of client._tcp_port it has to be the gestionnaire port */
-                        Socket socket_l = new Socket("localhost", client.gestionnaire_port);
+                        Socket socket_l = new Socket(client.gestionnaire_address, client.gestionnaire_port);
                         BufferedReader in_l = new BufferedReader(new InputStreamReader(socket_l.getInputStream()));
                         PrintWriter out_l = new PrintWriter(new OutputStreamWriter(socket_l.getOutputStream()));
 
@@ -67,7 +67,7 @@ public class MessageSender implements Runnable {
                         validMessage = true;
                         last_message_type = MessageType.LIST;
                     } else if (user_input.startsWith(MessageType.MGES.getValue()) && user_input.length()>5 ) {
-                        Socket socket_l = new Socket("localhost", client.gestionnaire_port);
+                        Socket socket_l = new Socket(client.gestionnaire_address, client.gestionnaire_port);
                         BufferedReader in_l = new BufferedReader(new InputStreamReader(socket_l.getInputStream()));
                         PrintWriter out_l = new PrintWriter(new OutputStreamWriter(socket_l.getOutputStream()));
                         message = user_input.substring(5, user_input.length());

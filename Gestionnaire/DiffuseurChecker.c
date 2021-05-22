@@ -27,7 +27,7 @@
 
 char **split_message(char *messsage)
 {
-  char **message_split = (char **)malloc(sizeof(char *) * ((5)));
+  char **message_split = (char **)malloc(sizeof(char *) * ((6)));
   char *copy = (char *)malloc(sizeof(char) * strlen(messsage) + 1);
   memmove(copy, messsage, strlen(messsage) + 1);
 
@@ -53,11 +53,11 @@ void *check_diffuseur(void *arg)
     {
       char **message_information = split_message(head->next->diffuseur_information);
 
-      int port = atoi(message_information[4]);
+      int port = atoi(message_information[5]);
       struct sockaddr_in adress_sock;
       adress_sock.sin_family = AF_INET;
       adress_sock.sin_port = htons(port);
-      inet_aton(message_information[3], &adress_sock.sin_addr);
+      inet_aton(message_information[4], &adress_sock.sin_addr);
 
       int descr = socket(PF_INET, SOCK_STREAM, 0);
       connect(descr, (struct sockaddr *)&adress_sock,
@@ -87,7 +87,8 @@ void *check_diffuseur(void *arg)
         else
         {
           pthread_mutex_lock(&lock);
-          printf("[REMOVING] - %s\n ", (head->next->diffuseur_information) + 5);
+
+          printf("[REMOVING] - %s\n", (head->next->diffuseur_information) + 5);
           remove_from_list(&head_copy->next, index);
           pthread_mutex_unlock(&lock);
           break;

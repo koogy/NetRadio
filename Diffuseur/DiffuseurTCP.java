@@ -20,15 +20,14 @@ public class DiffuseurTCP implements Runnable {
                 String user_input = input_reader.readLine();
                 if (user_input.equals(MessageType.REGI.getValue())) {
 
-                    Socket socket = new Socket("localhost", diffuseur.gestionnaire_port);
+                    Socket socket = new Socket(diffuseur.gestionnaire_address, diffuseur.gestionnaire_port);
 
                     BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-                    Message.sendMessage(out,
-                            MessageType.REGI.getValue() + " " + this.diffuseur.diffuseur_id + " "
-                                    + this.diffuseur.multidiffusion_address + " "
-                                    + Inet4Address.getLocalHost().getHostAddress() + " " + this.diffuseur.tcp_port);
+                    Message.sendMessage(out, MessageType.REGI.getValue() + " " + this.diffuseur.diffuseur_id + " "
+                            + this.diffuseur.multidiffusion_address + " " + this.diffuseur.multidiffusion_port + " "
+                            + Inet4Address.getLocalHost().getHostAddress() + " " + this.diffuseur.tcp_port);
 
                     System.out.println(in.readLine());
                     out.close();
