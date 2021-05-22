@@ -9,7 +9,12 @@ public class Message {
     }
 
     public static void sendMessage(PrintWriter out, String message) {
+        System.out.println("================");
         out.print(formatMessage(message));
+
+        System.out.println("L : " + message);
+        System.out.println("LS : " + message.length());
+        System.out.println("================");
         out.flush();
     }
 

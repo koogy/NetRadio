@@ -39,7 +39,7 @@ public class DiffuseurUDP implements Runnable {
                 /* Add message the message sent without the keyword "DIFF" */
                 diffuseur.messages_sent.add(diffuseur_message.substring(5));
 
-                InetSocketAddress ia = new InetSocketAddress(diffuseur.multidiffusion_address, diffuseur.tcp_port);
+                InetSocketAddress ia = new InetSocketAddress(diffuseur.multidiffusion_address, diffuseur.multidiffusion_port);
                 DatagramPacket paquet = new DatagramPacket(data, data.length, ia);
                 dso.send(paquet);
               
