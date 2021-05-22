@@ -23,6 +23,3 @@ cli2:
 	javac Client/*.java
 	java Client.Client Configs/Client/client-2.txt 
 
-ges:
-	javac Gestionnaire/*.java
-	java Gestionnaire.Gestionnaire
