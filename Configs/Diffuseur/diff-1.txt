@@ -1,9 +1,9 @@
 DIFFONE
-225.1.2.4
-4040
-3035
+225.10.25.40
+4647
+3839
 127.0.0.1
-6065
+6465
 
 ligne 1: id du diffuseur sur 8 caractères
 ligne 2 : adresse ip de multidiffusion

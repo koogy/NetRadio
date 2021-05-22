@@ -4,7 +4,7 @@ CLIENTA
 127.0.0.1
 3456
 127.0.0.1
-6065
+6465
 
 ligne 1: id du client sur 8 caractÃ¨res
 ligne 2 : adresse ip de multidiffusion
