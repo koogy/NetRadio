@@ -61,7 +61,7 @@ public class ReceptionTCP implements Runnable {
                                         Message.sendMessage(out, MessageType.MYOU.getValue() +(diffuseur.messages_sent
                                                 .get(num_mess + 1)));
                                     } else {
-                                        System.out.println("[MDIF] Error : Asking for a message not multicasted yet. Error message sent !");
+                                        System.out.println("[MDIF] Error : Message not diffused yet.!");
                                         Message.sendMessage(out, MessageType.MERR.getValue());
                                     }
 

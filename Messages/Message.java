@@ -41,13 +41,15 @@ public class Message {
 
     public static String completeMessage(String message) {
         if (message.length() > 140) {
+            System.out.println("I'm here");
             return message.substring(0, 140);
         }
         String temp = "";
         for (int i = 0; i < 140; i++) {
             temp += "#";
         }
-        return (message + temp).substring(0, 140);
+        temp =(message + temp).substring(0, 140);
+        return temp;
     }
 
 }

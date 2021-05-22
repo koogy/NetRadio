@@ -19,20 +19,30 @@ public class DiffuseurUDP implements Runnable {
         try {
             Random rand = new Random();
             DatagramSocket dso = new DatagramSocket();
-            byte[] data;
+            
             while (true) {
+                Thread.sleep(3000);
                 String diffuseur_message = "";
                 diffuseur_message = MessageType.DIFF.getValue();
                 diffuseur_message += Message.formatNumber(diffuseur.diffuseur_messages.getNum_mess(), "0000") + " ";
-                diffuseur_message += diffuseur.diffuseur_messages.getMessage();
+                
+                String mess = diffuseur.diffuseur_messages.getMessage();
+                String client_id = mess.substring(0,9);
+                String formattedMessage = Message.completeMessage(mess.substring(9));
+                diffuseur_message += client_id;
+                diffuseur_message += formattedMessage;
+                diffuseur_message += "\r\n";
 
+                byte[] data = diffuseur_message.getBytes();
+
+
+                /* Add message the message sent without the keyword "DIFF" */
                 diffuseur.messages_sent.add(diffuseur_message.substring(5));
 
-                data = diffuseur_message.getBytes();
                 InetSocketAddress ia = new InetSocketAddress(diffuseur.multidiffusion_address, diffuseur.tcp_port);
                 DatagramPacket paquet = new DatagramPacket(data, data.length, ia);
                 dso.send(paquet);
-                Thread.sleep(3000);
+              
             }
 
         } catch (Exception e) {
