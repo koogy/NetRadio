@@ -13,6 +13,7 @@ public class Client {
     int tcp_port;
     int gestionnaire_port;
     String gestionnaire_address;
+    boolean display;
 
     public Client(String filename) {
         try {
@@ -35,7 +36,7 @@ public class Client {
             this.gestionnaire_address = Message.formatIPaddress(reader.readLine());
 
             this.gestionnaire_port = Integer.parseInt(reader.readLine());
-
+            this.display = true;
             reader.close();
         } catch (Exception e) {
             System.err.format("Exception occurred trying to read '%s'.", filename);

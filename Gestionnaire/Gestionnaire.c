@@ -145,21 +145,23 @@ void *start_gestionnaire(void *arg)
                 current = current->next;
             }
         }
-        else if (startsWith("MGES ", message))
-        {
+        else if (startsWith("MGES", message))
+        {   
+
             struct DiffuseurList *current;
             if (head->next != NULL)
             {
+                printf("%s \n","[TRANSFERING] MESSAGE TO DIFFUSEUR");
                 current = head->next;
             }
             while (current != NULL)
             {
                 char **message_information = split_message(current->diffuseur_information);
-                int port = atoi(message_information[4]);
+                int port = atoi(message_information[5]);
                 struct sockaddr_in adress_sock;
                 adress_sock.sin_family = AF_INET;
                 adress_sock.sin_port = htons(port);
-                inet_aton(message_information[3], &adress_sock.sin_addr);
+                inet_aton(message_information[4], &adress_sock.sin_addr);
                 int descr = socket(PF_INET, SOCK_STREAM, 0);
                 connect(descr, (struct sockaddr *)&adress_sock,
                         sizeof(struct sockaddr_in));
@@ -167,10 +169,8 @@ void *start_gestionnaire(void *arg)
                 send(descr, message, strlen(message), 0);
                 current = current->next;
             }
-        }
-        else if (startsWith("MGOK", message))
-        {
-            printf("MGOK");
+
+         
         }
         else
         {

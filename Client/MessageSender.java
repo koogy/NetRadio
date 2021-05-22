@@ -28,6 +28,14 @@ public class MessageSender implements Runnable {
                 String user_input = "";
                 if (last_message_type == MessageType.NONE) {
                     user_input = input_reader.readLine();
+
+                    if(user_input.equals("DISPLAY")){
+                        client.display = !client.display;
+                        out.close();
+                        socket.close();
+                        continue;
+                    }
+
                     if (user_input.startsWith(MessageType.MESS.getValue()) && user_input.length() > 5) {
                         message = user_input.substring(5, user_input.length());
                         Message.sendMessage(out, MessageType.MESS.getValue() + " " + client.client_id + " " + message);
@@ -52,7 +60,6 @@ public class MessageSender implements Runnable {
                         validMessage = true;
                         last_message_type = MessageType.LAST;
                     } else if (user_input.equals(MessageType.LIST.getValue())) {
-                        /* Instead of client._tcp_port it has to be the gestionnaire port */
                         Socket socket_l = new Socket(client.gestionnaire_address, client.gestionnaire_port);
                         BufferedReader in_l = new BufferedReader(new InputStreamReader(socket_l.getInputStream()));
                         PrintWriter out_l = new PrintWriter(new OutputStreamWriter(socket_l.getOutputStream()));
@@ -74,7 +81,6 @@ public class MessageSender implements Runnable {
                         Message.sendMessage(out_l,
                                 MessageType.MGES.getValue() + " " + client.client_id + " " + message);
 
-                        // MDIF serait donc un nouveau type de message
                     } else if (user_input.startsWith(MessageType.MDIF.getValue()) && user_input.length() > 5) {
                         try {
                             message = user_input.substring(5, user_input.length());
