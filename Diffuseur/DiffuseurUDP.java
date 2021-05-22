@@ -31,13 +31,14 @@ public class DiffuseurUDP implements Runnable {
                 String formattedMessage = Message.completeMessage(mess.substring(9));
                 diffuseur_message += client_id;
                 diffuseur_message += formattedMessage;
+                diffuseur.messages_sent.add(diffuseur_message.substring(5));
                 diffuseur_message += "\r\n";
 
                 byte[] data = diffuseur_message.getBytes();
 
 
                 /* Add message the message sent without the keyword "DIFF" */
-                diffuseur.messages_sent.add(diffuseur_message.substring(5));
+                
 
                 InetSocketAddress ia = new InetSocketAddress(diffuseur.multidiffusion_address, diffuseur.multidiffusion_port);
                 DatagramPacket paquet = new DatagramPacket(data, data.length, ia);

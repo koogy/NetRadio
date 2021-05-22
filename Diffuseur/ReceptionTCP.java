@@ -31,13 +31,10 @@ public class ReceptionTCP implements Runnable {
                                     String [] message_split = message.split(" ");
                                     
                                     diffuseur.diffuseur_messages.addMessage(Message.formatID(message_split[1]) + " " + message_split[2]);
-                                    Message.sendMessage(out, MessageType.ACKM.getValue());
+                                    Message.sendMessage(out, (MessageType.ACKM.getValue()).substring(0,4));
 
                                 } else if (message.startsWith(MessageType.LAST.getValue())) {
-
-                                    /* Todo check number is >0 and <= 999 */
                                     int nb_mess = Integer.parseInt(message.substring(5, 8));
-
                                     if (nb_mess < diffuseur.messages_sent.size()) {
                                         System.out.println("[LAST] Sending the " + nb_mess + " last messages");
                                         while (nb_mess != 0 && nb_mess < diffuseur.messages_sent.size()) {
