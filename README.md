@@ -7,14 +7,14 @@
 # Compilation et éxecution
 
 - cd projetpr6_netradio
+- make : pour compiler tous les fichiers puis 
 - Pour compiler et éxecuter le diffuseur 
-    - make difX où X est le numéro du fichier config du diffuseur
+    - make diffX où X est le numéro du fichier config du diffuseur
 - Pour compiler et éxecuter le client 
     - make cliX où X est le numéro du fichier config du client
-- Pour compilet et éxecuter le gestionnaire
+- Pour éxecuter le gestionnaire
     - cd Gestionnaire 
-    - make 
-    - ./main <!-- A faire, ajouter un fichier de config pour le gestionnaire -->
+    - make gesX où X est le numéro du fichier config du client
 
 # Architecture du code 
 
