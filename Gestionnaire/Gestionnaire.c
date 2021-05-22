@@ -14,7 +14,7 @@
 
 pthread_mutex_t lock;
 char *gestionnaire_address = NULL;
-char *gestionnaire_port = 0;
+char *gestionnaire_port = NULL;
 
 char *formatNumber(int n)
 {
@@ -146,12 +146,12 @@ void *start_gestionnaire(void *arg)
             }
         }
         else if (startsWith("MGES", message))
-        {   
+        {
 
             struct DiffuseurList *current;
             if (head->next != NULL)
             {
-                printf("%s \n","[TRANSFERING] MESSAGE TO DIFFUSEUR");
+                printf("%s \n", "[TRANSFERING] MESSAGE TO DIFFUSEUR");
                 current = head->next;
             }
             while (current != NULL)
@@ -169,8 +169,6 @@ void *start_gestionnaire(void *arg)
                 send(descr, message, strlen(message), 0);
                 current = current->next;
             }
-
-         
         }
         else
         {
@@ -180,46 +178,50 @@ void *start_gestionnaire(void *arg)
 }
 
 int main(int argc, char **argv)
-{
-    /* READ CONFIG FILE */
+{   
     if (argc < 2)
     {
-        printf("Gestionnaire - Config file missing");
+        printf("Gestionnaire - Config file missing \n");
         exit(0);
     }
 
-    char *ip_address = NULL;
-    char *port_temp = NULL;
-    size_t len = 0;
     FILE *fp = fopen(argv[1], "r");
-
     if (fp == NULL)
     {
         perror("Error while opening the file.\n");
         exit(EXIT_FAILURE);
     }
 
-    getline(&ip_address, &len, fp);
-    getline(&port_temp, &len, fp);
-    gestionnaire_port = (port_temp);
-
-    gestionnaire_address = malloc(16);
-    memset(gestionnaire_address, '\0', 16);
+    char *temp_address = NULL;
+    size_t len = 0;
+    getline(&temp_address, &len, fp);
+    getline(&gestionnaire_port, &len, fp);
+    char ip_address[16];
+    memset(ip_address,'\0',16);
+    memcpy(ip_address,temp_address,strlen(temp_address));
     char *ptr = strtok(ip_address, ".");
+    char *split[4];
 
-    int count = 0;
+    int i = 0;
     while (ptr != NULL)
     {
-        strcat(gestionnaire_address, formatNumberThree(atoi(ptr)));
-        if (count < 3)
-        {
-            strcat(gestionnaire_address, ".");
-        }
+        split[i++] = formatNumberThree(atoi(ptr));
         ptr = strtok(NULL, ".");
-        count = count + 1;
     }
 
-    fclose(fp);
+    char gestionnaire_address_temp[15];
+    memcpy(gestionnaire_address_temp, split[0], 3);
+    memcpy(gestionnaire_address_temp + 3, ".", 1);
+    memcpy(gestionnaire_address_temp + 4, split[1], 3);
+    memcpy(gestionnaire_address_temp + 7, ".", 1);
+    memcpy(gestionnaire_address_temp + 8, split[2], 3);
+    memcpy(gestionnaire_address_temp + 11, ".", 3);
+    memcpy(gestionnaire_address_temp + 12, split[3], 3);
+
+    gestionnaire_address = malloc(16);
+    memset(gestionnaire_address,'\0',16);
+    memcpy(gestionnaire_address,gestionnaire_address_temp,15);
+    
     /* *************** */
     printf("---------------------------------------\n");
     printf("[GEST ADDRESS] : %s \n", gestionnaire_address);
