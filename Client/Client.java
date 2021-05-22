@@ -16,7 +16,7 @@ public class Client {
     public Client(String filename) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
-            this.client_id = reader.readLine();
+            this.client_id = Message.formatID(reader.readLine());
             if (client_id.length() > 8) {
                 this.client_id = client_id.substring(0, 8);
             }
