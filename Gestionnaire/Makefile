@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS = -pthread
+CFLAGS = -Wall -pthread
 
 SRC :=   $(wildcard *.c) 
 

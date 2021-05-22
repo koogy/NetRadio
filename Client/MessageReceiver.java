@@ -22,6 +22,7 @@ public class MessageReceiver implements Runnable {
                 socket.receive(packet);
                 String message = new String(packet.getData(), 0, packet.getLength());
 <<<<<<< HEAD
+<<<<<<< HEAD
                 //System.out.println(message);
 =======
 
@@ -30,6 +31,9 @@ public class MessageReceiver implements Runnable {
                 }
                 
 >>>>>>> 4b1dda7a8cb22d3583e35149041440595c487bc1
+=======
+                /* System.out.println(message); */
+>>>>>>> parent of 4b1dda7... final version, need to add test file
             }
         } catch (Exception e) {
             e.printStackTrace();
