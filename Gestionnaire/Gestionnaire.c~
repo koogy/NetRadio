@@ -14,18 +14,6 @@
 
 pthread_mutex_t lock;
 
-char *formatNumber(int n){
-    char * num = malloc(3);
-     memset(num, '\0', 3);
-    if ( n < 10 ){
-        sprintf(num,"0%d",n);
-    } else {
-         sprintf(num,"%d",n);
-    }
-
-    return num;
-}
-
 bool startsWith(const char *pre, const char *str)
 {
     size_t lenpre = strlen(pre),
@@ -45,7 +33,7 @@ void *start_gestionnaire(void *arg)
     hints.ai_flags = AI_PASSIVE;
     int sockfd, new_fd;
 
-    getaddrinfo(NULL, "6065", &hints, &servinfo);
+    getaddrinfo(NULL, "6060", &hints, &servinfo);
 
     for (p = servinfo; p != NULL; p = p->ai_next)
     {
@@ -68,7 +56,7 @@ void *start_gestionnaire(void *arg)
     listen(sockfd, 10);
 
     while (1)
-    {
+    { // main accept() loop
         sin_size = sizeof their_addr;
         new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
         if (new_fd == -1)
@@ -78,7 +66,7 @@ void *start_gestionnaire(void *arg)
         }
 
         char message[160];
-        int read = recv(new_fd, message, 160 * sizeof(char), 0);
+        int read = recv(new_fd, message, 99 * sizeof(char), 0);
         message[read] = '\0';
 
         if (startsWith("REGI", message))
@@ -105,7 +93,7 @@ void *start_gestionnaire(void *arg)
         else if (startsWith("LIST", message))
         {
             char s[11];
-            sprintf(s, "LINB %s\r\n", formatNumber(getSize(head->next)));
+            sprintf(s, "LINB %d\r\n", getSize(head->next));
             send(new_fd, s, 11, 0);
             struct DiffuseurList *current;
             if (head->next != NULL)
@@ -119,33 +107,6 @@ void *start_gestionnaire(void *arg)
                 send(new_fd, formatted_message, strlen(current->diffuseur_information), 0);
                 current = current->next;
             }
-
-
-        }
-        else if (startsWith("MGES ", message))
-        {
-            struct DiffuseurList *current;
-            if (head->next != NULL)
-            {
-                current = head->next;
-            }
-            while (current != NULL)
-            {
-                char **message_information = split_message(current->diffuseur_information);
-                int port = atoi(message_information[4]);
-                struct sockaddr_in adress_sock;
-                adress_sock.sin_family = AF_INET;
-                adress_sock.sin_port = htons(port);
-                inet_aton(message_information[3], &adress_sock.sin_addr);
-                int descr = socket(PF_INET, SOCK_STREAM, 0);
-                connect(descr, (struct sockaddr *)&adress_sock,
-                        sizeof(struct sockaddr_in));
-
-                send(descr, message, strlen(message), 0);
-                current = current->next;
-            }
-        } else if (startsWith("MGOK", message)){
-            printf("MGOK");
         }
         else
         {

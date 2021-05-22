@@ -1,8 +1,6 @@
 package Diffuseur;
 
-import java.util.LinkedList;
 import java.net.*;
-import java.util.Random;
 import java.io.*;
 import Messages.*;
 

@@ -19,7 +19,6 @@ public class MessageSender implements Runnable {
         BufferedReader input_reader = new BufferedReader(new InputStreamReader(System.in));
         boolean validMessage = false;
         MessageType last_message_type = MessageType.NONE;
-
         while (true) {
             try {
                 Socket socket = new Socket(client.diffuseur_address, client.tcp_port);
@@ -29,13 +28,12 @@ public class MessageSender implements Runnable {
                 String user_input = "";
                 if (last_message_type == MessageType.NONE) {
                     user_input = input_reader.readLine();
-                    if (user_input.startsWith(MessageType.MESS.getValue())) {
+                    if (user_input.startsWith(MessageType.MESS.getValue()) && user_input.length() > 5) {
                         message = user_input.substring(5, user_input.length());
-                        Message.sendMessage(out, MessageType.MESS.getValue() + " "+ client.client_id + " " + message);
+                        Message.sendMessage(out, MessageType.MESS.getValue() + " " + client.client_id + " " + message);
                         validMessage = true;
                         last_message_type = MessageType.MESS;
-
-                    } else if (user_input.startsWith(MessageType.LAST.getValue())) {
+                    } else if (user_input.startsWith(MessageType.LAST.getValue()) && user_input.length() > 5) {
                         try {
                             /* Quel comportement si nb > au nombre de message dans le diffuseur ? */
                             message = user_input.substring(5, user_input.length());
@@ -49,7 +47,8 @@ public class MessageSender implements Runnable {
                             socket.close();
                             continue;
                         }
-                        Message.sendMessage(out, MessageType.LAST.getValue() + " " + Message.formatNumber(message, "000"));
+                        Message.sendMessage(out,
+                                MessageType.LAST.getValue() + " " + Message.formatNumber(message, "000"));
                         validMessage = true;
                         last_message_type = MessageType.LAST;
                     } else if (user_input.equals(MessageType.LIST.getValue())) {
@@ -65,16 +64,18 @@ public class MessageSender implements Runnable {
                         for (int i = 0; i < num_diff; i++) {
                             System.out.println(in_l.readLine());
                         }
-                    //MGES serait donc un nouveau type de message
-                    } else if (user_input.startsWith(MessageType.MGES.getValue())) {
+                        validMessage = true;
+                        last_message_type = MessageType.LIST;
+                    } else if (user_input.startsWith(MessageType.MGES.getValue()) && user_input.length()>5 ) {
                         Socket socket_l = new Socket("localhost", client.gestionnaire_port);
                         BufferedReader in_l = new BufferedReader(new InputStreamReader(socket_l.getInputStream()));
                         PrintWriter out_l = new PrintWriter(new OutputStreamWriter(socket_l.getOutputStream()));
                         message = user_input.substring(5, user_input.length());
-                        Message.sendMessage(out_l, MessageType.MGES.getValue() +" " + client.client_id + " " + message);
-                        
-                    //MDIF serait donc un nouveau type de message
-                    }else if (user_input.startsWith(MessageType.MDIF.getValue())) {
+                        Message.sendMessage(out_l,
+                                MessageType.MGES.getValue() + " " + client.client_id + " " + message);
+
+                        // MDIF serait donc un nouveau type de message
+                    } else if (user_input.startsWith(MessageType.MDIF.getValue()) && user_input.length() > 5) {
                         try {
                             message = user_input.substring(5, user_input.length());
                             int nb_d = Integer.parseInt(message);
@@ -87,15 +88,18 @@ public class MessageSender implements Runnable {
                             socket.close();
                             continue;
                         }
-                        Message.sendMessage(out,MessageType.MDIF.getValue()+ " " + Message.formatNumber(message, "000"));
+                        Message.sendMessage(out,
+                                MessageType.MDIF.getValue() + " " + Message.formatNumber(message, "000"));
                         validMessage = true;
-                        last_message_type = MessageType.MDIF; 
+                        last_message_type = MessageType.MDIF;
                     } else {
                         System.out.println("Unknown command");
                         validMessage = false;
                     }
                 }
+
                 if (last_message_type == MessageType.LAST) {
+
                     String message_from_server = in.readLine();
                     System.out.println("\n================");
                     while (!message_from_server.equals(MessageType.ENDM.getValue())) {
@@ -123,12 +127,16 @@ public class MessageSender implements Runnable {
                         System.out.println("================\n");
                         last_message_type = MessageType.NONE;
                     }
+                } else if (last_message_type == MessageType.LIST) {
+                    System.out.println("================\n");
+                    last_message_type = MessageType.NONE;
                 } else {
                     if (validMessage) {
                         String message_from_server = in.readLine();
                         System.out.println(message_from_server);
-                        last_message_type = MessageType.NONE;
+                        
                     }
+                    last_message_type = MessageType.NONE;
 
                 }
 

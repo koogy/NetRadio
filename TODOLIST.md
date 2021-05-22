@@ -1,1 +1,0 @@
-- Un fichier contenant une liste de message à diffuser
