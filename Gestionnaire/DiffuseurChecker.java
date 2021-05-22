@@ -35,7 +35,6 @@ public class DiffuseurChecker implements Runnable {
                     Message.sendMessage(out, MessageType.RUOK.getValue());
                     message_server = in.readLine();
 
-                    System.out.println("M : " + message_server);
                     if (!message_server.equals(MessageType.IMOK.getValue())) {
                         isOff = true;
                     }

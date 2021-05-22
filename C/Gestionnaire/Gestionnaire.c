@@ -56,7 +56,7 @@ void *start_gestionnaire(void *arg)
     listen(sockfd, 10);
 
     while (1)
-    { // main accept() loop
+    {
         sin_size = sizeof their_addr;
         new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
         if (new_fd == -1)
@@ -66,7 +66,7 @@ void *start_gestionnaire(void *arg)
         }
 
         char message[160];
-        int read = recv(new_fd, message, 99 * sizeof(char), 0);
+        int read = recv(new_fd, message, 160 * sizeof(char), 0);
         message[read] = '\0';
 
         if (startsWith("REGI", message))
@@ -107,35 +107,38 @@ void *start_gestionnaire(void *arg)
                 send(new_fd, formatted_message, strlen(current->diffuseur_information), 0);
                 current = current->next;
             }
-	} else if(startsWith("MGES",message)){
-	   char mess[156];
-	   memcpy(mess, &message[5], 155);
-	   mess[155]='\0';
-	   char formatted_message[160] = "MESS ";
-           strcat(formatted_message, mess+5);
-           struct DiffuseurList *current;
-            if(head->next != NULL){
-             current= head->next;
-
+        }
+        else if (startsWith("MGES", message))
+        {
+            char mess[156];
+            memcpy(mess, &message[5], 155);
+            mess[155] = '\0';
+            char formatted_message[160] = "MESS ";
+            strcat(formatted_message, mess + 5);
+            struct DiffuseurList *current;
+            if (head->next != NULL)
+            {
+                current = head->next;
             }
-            while(current != NULL){
-	      char ** message_information = split_message(current -> diffuseur_information);
-	      int port = atoi(message_information[4]);
-	      struct sockaddr_in adress_sock;
-	      adress_sock.sin_family = AF_INET;
-	      adress_sock.sin_port = htons(port);
-	      inet_aton(message_information[3], & adress_sock.sin_addr);
-              int descr = socket(PF_INET, SOCK_STREAM, 0);
-	      connect(descr, (struct sockaddr * ) & adress_sock,
-        sizeof(struct sockaddr_in));
-   
-	      send(descr, formatted_message, strlen(formatted_message), 0);
-	      char buff[100];
-              int size_rec = recv(descr, buff, 99 * sizeof(char), 0);
-	      buff[size_rec] = '\0';
-	      //printf("%s\n", buff);
-	      
-	      current = current->next;
+            while (current != NULL)
+            {
+                char **message_information = split_message(current->diffuseur_information);
+                int port = atoi(message_information[4]);
+                struct sockaddr_in adress_sock;
+                adress_sock.sin_family = AF_INET;
+                adress_sock.sin_port = htons(port);
+                inet_aton(message_information[3], &adress_sock.sin_addr);
+                int descr = socket(PF_INET, SOCK_STREAM, 0);
+                connect(descr, (struct sockaddr *)&adress_sock,
+                        sizeof(struct sockaddr_in));
+
+                send(descr, formatted_message, strlen(formatted_message), 0);
+                char buff[100];
+                int size_rec = recv(descr, buff, 99 * sizeof(char), 0);
+                buff[size_rec] = '\0';
+                //printf("%s\n", buff);
+
+                current = current->next;
             }
         }
         else
