@@ -10,6 +10,7 @@ public class Diffuseur {
     String multidiffusion_address;
     int multidiffusion_port;
     int tcp_port;
+    String gestionnaire_address;
     int gestionnaire_port;
 
     MessageDiffuseur diffuseur_messages;
@@ -19,11 +20,11 @@ public class Diffuseur {
         messages_sent = new ArrayList<String>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
-
             this.diffuseur_id = Message.formatID(reader.readLine());
             this.multidiffusion_address = Message.formatIPaddress(reader.readLine());
             this.multidiffusion_port = Integer.parseInt(reader.readLine());
             this.tcp_port = Integer.parseInt(reader.readLine());
+            this.gestionnaire_address = Message.formatIPaddress(reader.readLine());
             this.gestionnaire_port = Integer.parseInt(reader.readLine());
 
             reader.close();
@@ -43,6 +44,7 @@ public class Diffuseur {
         System.out.println("[MULTIDIFUSION ADDRESS] : " + this.multidiffusion_address);
         System.out.println("[MULTIDIFUSION PORT] : " + this.multidiffusion_port);
         System.out.println("[TCP PORT] : " + this.tcp_port);
+        System.out.println("[GES ADDRESS] : " + this.gestionnaire_address);
         System.out.println("[GES PORT] : " + this.gestionnaire_port);
         System.out.println("---------------------------------------");
         System.out.println();

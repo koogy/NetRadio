@@ -12,6 +12,7 @@ public class Client {
     String diffuseur_address;
     int tcp_port;
     int gestionnaire_port;
+    String gestionnaire_address;
 
     public Client(String filename) {
         try {
@@ -26,11 +27,12 @@ public class Client {
                 System.out.println("MULTIDIFFUSION PORT has to be < 9999");
 
             }
-            this.diffuseur_address = reader.readLine();
+            this.diffuseur_address = Message.formatIPaddress(reader.readLine());
             this.tcp_port = Integer.parseInt(reader.readLine());
             if (tcp_port > 9999) {
                 System.out.println("TCP_PORT has to be < 9999");
             }
+            this.gestionnaire_address = Message.formatIPaddress(reader.readLine());
 
             this.gestionnaire_port = Integer.parseInt(reader.readLine());
 
@@ -60,6 +62,7 @@ public class Client {
         System.out.println("[MULTIDIFUSION ADDRESS] : " + this.multidiffusion_address);
         System.out.println("[MULTIDIFUSION PORT] : " + this.multidiffusion_port);
         System.out.println("[TCP PORT] : " + this.tcp_port);
+        System.out.println("[GES ADDRESS] : " + this.gestionnaire_address);
         System.out.println("[GES PORT] : " + this.gestionnaire_port);
         System.out.println("---------------------------------------");
         System.out.println();
